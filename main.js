@@ -20,6 +20,7 @@ fastify.register(require("./src/plugins/db"));
 // We declare a route
 fastify.register(require("./src/routes/general"), { prefix: "/general" });
 fastify.register(require("./src/routes/static"), { prefix: "/static" });
+fastify.register(require("./src/routes/persons"), { prefix: "/persons" });
 
 // we use helmet
 // fastify.register(helmet);
