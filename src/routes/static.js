@@ -5,56 +5,7 @@
  */
 
 async function routes(fastify, options) {
-  const colweather = fastify.mongo.weather.db.collection("wdata");
-  const colships = fastify.mongo.ships.db.collection("shipwrecks");
-
-  fastify.get("/", async (request, reply) => {
-    return { hostias: "leches" };
-  });
-
-  fastify.get("/version", async (request, reply) => {
-    return { version: process.env.npm_package_version };
-  });
-
-  fastify.get("/leches", async (request, reply) => {
-    const result = await colweather.find().toArray();
-    return result;
-  });
-
-  fastify.get("/peligrosos", async (request, reply) => {
-    const result = await colships
-      .find({ feature_type: { $regex: "dangerous" } })
-      .toArray();
-    return result;
-  });
-
-  fastify.get("/peligrososcontar", async (request, reply) => {
-    const result = await colships.countDocuments({
-      feature_type: { $regex: "dangerous" },
-    });
-
-    return { total: result };
-  });
-
-  fastify.get("/profundidad", async (request, reply) => {
-    const result = await colships
-      .find({ depth: { $exists: true, $ne: "" } })
-      .toArray();
-    return result;
-  });
-
-  fastify.get("/profundidad/:prof", async (request, reply) => {
-    // const prof = parseInt(request.params.prof);
-    const prof = parseFloat(request.params.prof);
-    console.info(prof);
-    try {
-      const result = await colships.find({ depth: { $gt: prof } }).count();
-      return { total: result };
-    } catch (error) {
-      console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
-    }
-  });
+  const persons = fastify.mongo.atlanto.db.collection("wdata");
 
   fastify.get("/profundidadotro", async (request, reply) => {
     // const prof = parseInt(request.params.prof);
