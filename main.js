@@ -23,7 +23,7 @@ fastify.register(require("./src/routes/static"), { prefix: "/static" });
 fastify.register(require("./src/routes/persons"), { prefix: "/persons" });
 
 // we use helmet
-// fastify.register(helmet);
+fastify.register(helmet);
 
 fastify.listen({ port: process.env.PORT }, (err) => {
   if (err) {
