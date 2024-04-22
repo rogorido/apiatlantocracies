@@ -4,11 +4,9 @@
  * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
 
-const {
-  pipeline
-} = require("../queries/persons");
+const { pipeline } = require("../queries/persons/persons");
 
-const {createDataChart} = require('../utils/dataForChart');
+const { createDataChart } = require("../utils/dataForChart");
 
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
@@ -23,7 +21,6 @@ async function routes(fastify, options) {
       reply.status(500).send("error en el servidor o en la consulta");
     }
   });
-
 }
 
 module.exports = routes;
