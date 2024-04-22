@@ -14,6 +14,12 @@ fastify.addHook("onRequest", (request, reply, done) => {
   }
 });
 
+fastify.addHook("onRequest", (request, reply, done) => {
+  const ip = request.ip;
+  console.log(`La solicitud provino de la dirección IP: ${ip}`);
+  done();
+});
+
 fastify.register(require("@fastify/cors"), {
   //origin: true, // Permitir solicitudes desde cualquier origen
   origin: [
@@ -25,6 +31,12 @@ fastify.register(require("@fastify/cors"), {
   ], // Permitir solicitudes desde cualquier origen
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
+
+fastify.register(require("@fastify/rate-limit"), {
+  max: 60,
+  timeWindow: "1 minute",
+});
+
 // We load the dbConnector
 fastify.register(require("./src/plugins/db"));
 
