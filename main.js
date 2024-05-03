@@ -33,7 +33,7 @@ fastify.register(require("@fastify/cors"), {
 });
 
 fastify.register(require("@fastify/rate-limit"), {
-  max: 60,
+  max: 120,
   timeWindow: "1 minute",
 });
 
@@ -45,6 +45,9 @@ fastify.register(require("./src/routes/general"), { prefix: "/general" });
 fastify.register(require("./src/routes/static"), { prefix: "/static" });
 fastify.register(require("./src/routes/persons"), { prefix: "/persons" });
 fastify.register(require("./src/routes/places"), { prefix: "/places" });
+fastify.register(require("./src/routes/events"), { prefix: "/events" });
+fastify.register(require("./src/routes/search"), { prefix: "/search" });
+fastify.register(require("./src/routes/management"), { prefix: "/management" });
 
 // we use helmet
 fastify.register(helmet);
