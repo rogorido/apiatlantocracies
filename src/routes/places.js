@@ -14,6 +14,22 @@ async function routes(fastify, options) {
   fastify.get("/", async (request, reply) => {
     try {
       const result = await persons.aggregate(pl_places_global).toArray();
+      // we have to flip the coordinates
+      const coordsflipped = flipCoords(result);
+
+      return reply.status(200).send(coordsflipped);
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
+
+  fastify.get("/:place", async (request, reply) => {
+    const { place } = request.params;
+
+    try {
+      const result = await persons.find({ placebirth: place }).toArray();
+
       reply.status(200).send(result);
     } catch (error) {
       console.error(error);
