@@ -9,10 +9,6 @@ const { flipCoords } = require("../utils/coordsFlipped");
  * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
 
-const { pl_places_global } = require("../queries/places/places");
-
-const { createDataChart } = require("../utils/dataForChart");
-
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
 
