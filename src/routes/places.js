@@ -1,3 +1,8 @@
+const { pl_places_global } = require("../queries/places/places");
+const related = require("../queries/places/related");
+const { createDataPlacesNetwork } = require("../utils/dataNetwork");
+const { flipCoords } = require("../utils/coordsFlipped");
+
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
