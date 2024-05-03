@@ -1,6 +1,6 @@
 {
   "name": "apiatlantocracies",
-  "version": "0.0.42",
+  "version": "0.8.1",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
