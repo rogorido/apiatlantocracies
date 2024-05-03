@@ -18,6 +18,35 @@ async function routes(fastify, options) {
     return { version: process.env.npm_package_version };
   });
 
+  fastify.get("/generalstats", async (request, reply) => {
+    try {
+      const [events, positions, titles, relations, genders, individuals] =
+        await Promise.all([
+          persons.aggregate(q.eventtypes).toArray(),
+          persons.aggregate(q.positionstypes).toArray(),
+          persons.aggregate(q.titlestypes).toArray(),
+          persons.aggregate(q.relationstypes).toArray(),
+          persons.aggregate(q.genders).toArray(),
+          persons.countDocuments(),
+        ]);
+
+      const gendersChartData = createDataChartGenders(genders);
+
+      reply.status(200).send({
+        totalEvents: events.length,
+        totalPositions: positions.length,
+        totalTitles: titles.length,
+        totalRelations: relations.length,
+        totalGenders: genders,
+        totalPersons: individuals,
+        gendersChartData,
+      });
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
+
   fastify.get("/eventtypes", async (request, reply) => {
     try {
       const result = await persons.aggregate(eventtypes).toArray();
