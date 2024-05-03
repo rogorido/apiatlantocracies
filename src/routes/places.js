@@ -20,6 +20,20 @@ async function routes(fastify, options) {
       reply.status(500).send("error en el servidor o en la consulta");
     }
   });
+
+  fastify.get("/related/:place", async (request, reply) => {
+    const { place } = request.params;
+
+    try {
+      const places = await persons.aggregate(related.pipeline(place)).toArray();
+      const placesnetwork = createDataPlacesNetwork(places, place);
+
+      reply.status(200).send({ places, placesnetwork });
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
 }
 
 module.exports = routes;
