@@ -1,78 +1,88 @@
 // Types of events with frequency
 const eventtypes = [
-  { $unwind: { path: "$events" } },
   {
-    $group: {
-      _id: "$events.typeEv",
-      total: { $sum: 1 },
-    },
+    $unwind: { path: "$events" },
   },
   {
-    $sort: { total: -1 },
+    $sortByCount: "$events.typeEv",
+  },
+  {
+    $match: { _id: { $ne: null } },
   },
 ];
 
 const positionstypes = [
   {
-    $unwind: {
-      path: "$positions",
-    },
+    $unwind: { path: "$positions" },
   },
   {
-    $group: {
-      _id: "$positions.namePos",
-      total: {
-        $sum: 1,
-      },
-    },
+    $sortByCount: "$positions.namePos",
   },
   {
-    $sort: {
-      total: -1,
-    },
+    $match: { _id: { $ne: null } },
   },
 ];
 
 const relationstypes = [
   {
-    $unwind: {
-      path: "$relations",
-    },
+    $unwind: { path: "$relations" },
   },
   {
-    $group: {
-      _id: "$relations.typeRel",
-      total: {
-        $sum: 1,
-      },
-    },
+    $sortByCount: "$relations.typeRel",
   },
   {
-    $sort: {
-      total: -1,
-    },
+    $match: { _id: { $ne: null } },
   },
 ];
 
 const titlestypes = [
   {
-    $unwind: {
-      path: "$titles",
-    },
+    $unwind: { path: "$titles" },
   },
   {
-    $group: {
-      _id: "$titles.nomTit",
-      total: {
-        $sum: 1,
-      },
-    },
+    $sortByCount: "$titles.nomTit",
   },
   {
-    $sort: {
-      total: -1,
+    $match: { _id: { $ne: null } },
+  },
+];
+
+/*
+ * Requires the MongoDB Node.js Driver
+ * https://mongodb.github.io/node-mongodb-native
+ */
+
+const genders = [
+  {
+    $sortByCount: "$gender",
+  },
+  {
+    $project: {
+      count: 1,
+      gender: "$_id",
+      _id: 0,
     },
   },
 ];
 
-module.exports = { eventtypes, positionstypes, relationstypes, titlestypes };
+const hasTitles = [
+  {
+    $sortByCount: "$hasTitles",
+  },
+  {
+    $project: {
+      count: 1,
+      hasTitles: "$_id",
+      _id: 0,
+    },
+  },
+];
+
+module.exports = {
+  eventtypes,
+  positionstypes,
+  relationstypes,
+  titlestypes,
+  genders,
+  hasTitles,
+};
