@@ -1,13 +1,22 @@
+const personsbyplace = require("../queries/persons/byplace");
+const { histBirth, birthYearsBucket } = require("../queries/persons/births");
+
+const { personDetails } = require("../utils/personDetalis");
+
+const { createDataTimeline } = require("../utils/dataTimelne");
+
+const { ObjectId } = require("mongodb");
+
+const {
+  createDataChart,
+  createDataChartHistBirths,
+} = require("../utils/dataForChart");
+
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
  * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
  */
-
-const { pipeline } = require("../queries/persons/persons");
-
-const { createDataChart } = require("../utils/dataForChart");
-
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
 
