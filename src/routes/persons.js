@@ -34,7 +34,7 @@ async function routes(fastify, options) {
 
   fastify.get("/birthyears", async (request, reply) => {
     try {
-      const result = await persons.aggregate(pipeline).toArray();
+      const result = await vpersons.aggregate(birthYearsBucket).toArray();
       const data = createDataChart(result);
       reply.status(200).send(data);
     } catch (error) {
