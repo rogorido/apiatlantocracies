@@ -1,10 +1,8 @@
 const personsbyplace = require("../queries/persons/byplace");
 const { histBirth, birthYearsBucket } = require("../queries/persons/births");
-
 const { personDetails } = require("../utils/personDetalis");
-
 const { createDataTimeline } = require("../utils/dataTimelne");
-
+const { createDataPersonsNetwork } = require("../utils/personNetwork");
 const { ObjectId } = require("mongodb");
 
 const {
