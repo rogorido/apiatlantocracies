@@ -2,6 +2,7 @@ const { pl_places_global } = require("../queries/places/places");
 const related = require("../queries/places/related");
 const { createDataPlacesNetwork } = require("../utils/dataNetwork");
 const { flipCoords } = require("../utils/coordsFlipped");
+const { ObjectId } = require("mongodb");
 
 /**
  * Encapsulates the routes
@@ -49,6 +50,25 @@ async function routes(fastify, options) {
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
+
+  fastify.get("/placesbyperson/:id", async (request, reply) => {
+    const { id } = request.params;
+
+    if (!id) {
+      return reply.status(500).send("error en el servidor o en la consulta");
+    }
+
+    try {
+      const result = await persons
+        .aggregate([{ $match: { _id: new ObjectId(id) } }, ...pl_places_global])
+        .toArray();
+      console.log(result);
+      return reply.status(200).send(result);
+    } catch (error) {
+      console.error(error);
+      return reply.status(500).send("error en el servidor o en la consulta");
     }
   });
 }
