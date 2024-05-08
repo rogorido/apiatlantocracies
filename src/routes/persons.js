@@ -5,6 +5,8 @@ const { createDataTimeline } = require("../utils/dataTimelne");
 const { createDataPersonsNetwork } = require("../utils/personNetwork");
 const { ObjectId } = require("mongodb");
 
+const { placeSchema } = require("../schemas/schemas");
+
 const {
   createDataChart,
   createDataChartHistBirths,
@@ -41,7 +43,7 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/personsbyplace/:place", async (request, reply) => {
+  fastify.get("/personsbyplace/:place", placeSchema, async (request, reply) => {
     const { place } = request.params;
     try {
       const result = await persons
@@ -70,7 +72,16 @@ async function routes(fastify, options) {
       // we create a timeline
       const personeventstimeline = createDataTimeline(persondetails);
 
-      return reply.status(200).send({ persondetails, personeventstimeline });
+      // we create network
+      const personnetwork = createDataPersonsNetwork(
+        persondetails.relations,
+        persondetails.name
+      );
+
+      console.log(personnetwork);
+      return reply
+        .status(200)
+        .send({ persondetails, personeventstimeline, personnetwork });
     } catch (error) {
       console.error(error);
       return reply.status(500).send("error en el servidor o en la consulta");

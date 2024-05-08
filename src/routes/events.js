@@ -3,6 +3,8 @@ const eventsbyplace = require("../queries/events/byplace");
 // TODO: esto realmente hay que cambiarle el nombre
 const { createDataChartHistBirths } = require("../utils/dataForChart");
 
+const { placeSchema } = require("../schemas/schemas");
+
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
@@ -22,12 +24,13 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/eventsbyplace/:place", async (request, reply) => {
+  fastify.get("/eventsbyplace/:place", placeSchema, async (request, reply) => {
     const { place } = request.params;
     try {
       const result = await persons
         .aggregate(eventsbyplace.pipeline(place))
         .toArray();
+      // TODO qué hace esto aquí?
       const dataChart = createDataChartHistBirths(result);
       reply.status(200).send({ result, dataChart });
     } catch (error) {

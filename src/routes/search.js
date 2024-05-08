@@ -26,10 +26,14 @@ async function routes(fastify, options) {
     try {
       const filter = pipeline(request.body);
 
+      console.log(filter);
+
       const result = await vpersons.find(filter).toArray();
       const gendersData = await vpersons
         .aggregate([{ $match: filter }, ...q.genders])
         .toArray();
+
+      console.log(gendersData);
 
       const histBirthsData = await vpersons
         .aggregate([{ $match: filter }, ...qq.histBirth])
