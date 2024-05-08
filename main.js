@@ -28,6 +28,7 @@ fastify.register(require("@fastify/cors"), {
     "http://192.168.1.105:5173",
     "http://127.0.0.1:4173",
     "http://192.168.1.105:4173",
+    "https://open.georeligion.org",
   ], // Permitir solicitudes desde cualquier origen
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
