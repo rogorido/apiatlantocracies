@@ -4,6 +4,15 @@ const { createDataPlacesNetwork } = require("../utils/dataNetwork");
 const { flipCoords } = require("../utils/coordsFlipped");
 const { ObjectId } = require("mongodb");
 
+const eventsbyplace = require("../queries/events/byplace");
+
+// TODO: esto realmente hay que cambiarle el nombre
+const { createDataChartHistBirths } = require("../utils/dataForChart");
+
+const personsbyplace = require("../queries/persons/byplace");
+
+const { placeSchema } = require("../schemas/schemas");
+
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
@@ -26,7 +35,7 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/:place", async (request, reply) => {
+  fastify.get("/:place", placeSchema, async (request, reply) => {
     const { place } = request.params;
 
     try {
@@ -39,7 +48,46 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/related/:place", async (request, reply) => {
+  // NOTE: we use this route which summarises various routes
+  fastify.get("/placeid/:place", placeSchema, async (request, reply) => {
+    const { place } = request.params;
+
+    try {
+      const personsbirths = await persons.find({ placebirth: place }).toArray();
+
+      // pero esto es lo mismo,no?
+      const personsall = await persons
+        .aggregate(personsbyplace.pipeline(place))
+        .toArray();
+
+      // esto es lo mismo q /related/:place
+      const places = await persons.aggregate(related.pipeline(place)).toArray();
+      const placesnetwork = createDataPlacesNetwork(places, place);
+
+      const placesrelated = { places, placesnetwork };
+
+      // esto es lo mismo q /eventsbyplace/:place
+      const eventsplace = await persons
+        .aggregate(eventsbyplace.pipeline(place))
+        .toArray();
+      // TODO qué hace esto aquí?
+      const dataChart = createDataChartHistBirths(eventsplace);
+
+      const eventsrelated = { eventsplace, dataChart };
+
+      reply.status(200).send({
+        personsbirths,
+        personsall,
+        placesrelated,
+        eventsrelated,
+      });
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
+
+  fastify.get("/related/:place", placeSchema, async (request, reply) => {
     const { place } = request.params;
 
     try {
