@@ -20,7 +20,7 @@ const qq = require("../queries/persons/births");
  */
 async function routes(fastify, options) {
   // const persons = fastify.mongo.atlanto.db.collection("persons");
-  const vpersons = fastify.mongo.atlanto.db.collection("vistapersonas");
+  const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
   fastify.post("/", async (request, reply) => {
     try {
