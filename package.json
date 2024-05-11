@@ -1,6 +1,6 @@
 {
   "name": "apiatlantocracies",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -19,7 +19,7 @@
     "@fastify/mongodb": "^8.0.0",
     "@fastify/rate-limit": "^9.1.0",
     "dotenv": "^16.4.5",
-    "fastify": "^4.26.2",
+    "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1"
   }
 }
