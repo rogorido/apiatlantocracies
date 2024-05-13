@@ -3,7 +3,7 @@ const placeSchema = {
     params: {
       type: "object",
       properties: {
-        place: { type: "string", pattern: "^[a-zA-ZáéíóúÁÉÍÓÚ]+$" },
+        place: { type: "string", pattern: "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$" },
       },
       required: ["place"],
       additionalProperties: false,

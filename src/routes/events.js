@@ -24,7 +24,9 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/eventsbyplace/:place", placeSchema, async (request, reply) => {
+  // Cambiar
+  // fastify.get("/eventsbyplace/:place", placeSchema, async (request, reply) => {
+  fastify.get("/eventsbyplace/:place", async (request, reply) => {
     const { place } = request.params;
     try {
       const result = await persons

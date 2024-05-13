@@ -43,7 +43,9 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/personsbyplace/:place", placeSchema, async (request, reply) => {
+  // TODO: cambiar
+  //fastify.get("/personsbyplace/:place", placeSchema, async (request, reply) => {
+  fastify.get("/personsbyplace/:place", async (request, reply) => {
     const { place } = request.params;
     try {
       const result = await persons

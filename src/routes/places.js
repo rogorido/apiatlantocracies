@@ -35,7 +35,8 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/:place", placeSchema, async (request, reply) => {
+  //fastify.get("/:place", placeSchema, async (request, reply) => {
+  fastify.get("/:place", async (request, reply) => {
     const { place } = request.params;
 
     try {
@@ -49,7 +50,8 @@ async function routes(fastify, options) {
   });
 
   // NOTE: we use this route which summarises various routes
-  fastify.get("/placeid/:place", placeSchema, async (request, reply) => {
+  //fastify.get("/placeid/:place", placeSchema, async (request, reply) => {
+  fastify.get("/placeid/:place", async (request, reply) => {
     const { place } = request.params;
 
     try {
@@ -87,7 +89,9 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/related/:place", placeSchema, async (request, reply) => {
+  // Cambiar
+  // fastify.get("/related/:place", placeSchema, async (request, reply) => {
+  fastify.get("/related/:place", async (request, reply) => {
     const { place } = request.params;
 
     try {
