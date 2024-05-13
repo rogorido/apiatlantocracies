@@ -29,6 +29,7 @@ fastify.register(require("@fastify/cors"), {
     "http://127.0.0.1:4173",
     "http://192.168.1.105:4173",
     "https://open.georeligion.org",
+    "https://atlanto.digitalhumanities.digital",
   ], // Permitir solicitudes desde cualquier origen
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
