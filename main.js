@@ -14,32 +14,20 @@ fastify.addHook("onRequest", (request, reply, done) => {
   }
 });
 
-// fastify.addHook("onRequest", (request, reply, done) => {
-//   const ip = request.ip;
-//   console.log(`La solicitud provino de la dirección IP: ${ip}`);
-//   done();
-// });
-
-// fastify.register(require("@fastify/cors"), {
-//   //origin: true, // Permitir solicitudes desde cualquier origen
-//   origin: "*",
-//   // origin: [
-//   //   "http://localhost:5173",
-//   //   "http://localhost:3000",
-//   //   "http://192.168.1.105:5173",
-//   //   "http://127.0.0.1:4173",
-//   //   "http://192.168.1.105:4173",
-//   //   "https://open.georeligion.org",
-//   //   "https://api.georeligion.org",
-//   //   "https://atlanto.digitalhumanities.digital",
-//   // ], // Permitir solicitudes desde cualquier origen
-//   // methods: ["GET", "POST", "PUT", "DELETE"],
-//   methods: ["GET", "POST"],
-// });
-
+// el asunto es este: https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+// cuando hace un POST realmente pregunta antes al servidor con el método OPTIONS...
 fastify.register(require("@fastify/cors"), {
-  origin: "*",
-  //methods: "GET, POST",
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://192.168.1.105:5173",
+    "http://127.0.0.1:4173",
+    "http://192.168.1.105:4173",
+    "https://open.georeligion.org",
+    "https://api.georeligion.org",
+    "https://atlanto.digitalhumanities.digital",
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
 });
 
 fastify.register(require("@fastify/rate-limit"), {
