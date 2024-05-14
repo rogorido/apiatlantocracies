@@ -21,17 +21,19 @@ fastify.addHook("onRequest", (request, reply, done) => {
 });
 
 fastify.register(require("@fastify/cors"), {
-  //origin: true, // Permitir solicitudes desde cualquier origen
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://192.168.1.105:5173",
-    "http://127.0.0.1:4173",
-    "http://192.168.1.105:4173",
-    "https://open.georeligion.org",
-    "https://atlanto.digitalhumanities.digital",
-  ], // Permitir solicitudes desde cualquier origen
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: true, // Permitir solicitudes desde cualquier origen
+  // origin: [
+  //   "http://localhost:5173",
+  //   "http://localhost:3000",
+  //   "http://192.168.1.105:5173",
+  //   "http://127.0.0.1:4173",
+  //   "http://192.168.1.105:4173",
+  //   "https://open.georeligion.org",
+  //   "https://api.georeligion.org",
+  //   "https://atlanto.digitalhumanities.digital",
+  // ], // Permitir solicitudes desde cualquier origen
+  // methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST"],
 });
 
 fastify.register(require("@fastify/rate-limit"), {
