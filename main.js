@@ -14,14 +14,15 @@ fastify.addHook("onRequest", (request, reply, done) => {
   }
 });
 
-fastify.addHook("onRequest", (request, reply, done) => {
-  const ip = request.ip;
-  console.log(`La solicitud provino de la dirección IP: ${ip}`);
-  done();
-});
+// fastify.addHook("onRequest", (request, reply, done) => {
+//   const ip = request.ip;
+//   console.log(`La solicitud provino de la dirección IP: ${ip}`);
+//   done();
+// });
 
 fastify.register(require("@fastify/cors"), {
-  origin: true, // Permitir solicitudes desde cualquier origen
+  //origin: true, // Permitir solicitudes desde cualquier origen
+  origin: "*",
   // origin: [
   //   "http://localhost:5173",
   //   "http://localhost:3000",
