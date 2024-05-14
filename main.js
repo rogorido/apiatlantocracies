@@ -39,7 +39,7 @@ fastify.addHook("onRequest", (request, reply, done) => {
 
 fastify.register(require("@fastify/cors"), {
   origin: "*",
-  methods: "GET, POST",
+  //methods: "GET, POST",
 });
 
 fastify.register(require("@fastify/rate-limit"), {
