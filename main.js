@@ -18,13 +18,7 @@ fastify.addHook("onRequest", (request, reply, done) => {
 // cuando hace un POST realmente pregunta antes al servidor con el método OPTIONS...
 fastify.register(require("@fastify/cors"), {
   origin: [
-    "http://localhost:5173",
     "http://localhost:3000",
-    "http://192.168.1.105:5173",
-    "http://127.0.0.1:4173",
-    "http://192.168.1.105:4173",
-    "https://open.georeligion.org",
-    "https://api.georeligion.org",
     "https://atlanto.digitalhumanities.digital",
   ],
   methods: ["GET", "POST", "OPTIONS"],
