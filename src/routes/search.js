@@ -24,6 +24,7 @@ async function routes(fastify, options) {
 
   fastify.post("/", async (request, reply) => {
     try {
+      console.log(request.body);
       const filter = pipeline(request.body);
 
       console.log(filter);

@@ -25,7 +25,7 @@ const pipeline = (filter) => {
     delete filter.histBirths;
   }
 
-  //console.log(JSON.stringify(filter, null, 2));
+  console.log(JSON.stringify(filter, null, 2));
 
   return filter;
 };

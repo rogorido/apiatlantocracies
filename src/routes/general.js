@@ -19,7 +19,7 @@ async function routes(fastify, options) {
     try {
       const [events, positions, titles, relations, genders, individuals] =
         await Promise.all([
-          persons.aggregate(q.eventtypes).toArray(),
+          persons.aggregate(q.eventstypes).toArray(),
           persons.aggregate(q.positionstypes).toArray(),
           persons.aggregate(q.titlestypes).toArray(),
           persons.aggregate(q.relationstypes).toArray(),
@@ -44,9 +44,9 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/eventtypes", async (request, reply) => {
+  fastify.get("/eventstypes", async (request, reply) => {
     try {
-      const result = await persons.aggregate(q.eventtypes).toArray();
+      const result = await persons.aggregate(q.eventstypes).toArray();
       reply.status(200).send(result);
     } catch (error) {
       console.error(error);

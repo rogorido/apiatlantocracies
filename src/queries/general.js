@@ -1,5 +1,5 @@
 // Types of events with frequency
-const eventtypes = [
+const eventstypes = [
   {
     $unwind: { path: "$events" },
   },
@@ -79,7 +79,7 @@ const hasTitles = [
 ];
 
 module.exports = {
-  eventtypes,
+  eventstypes,
   positionstypes,
   relationstypes,
   titlestypes,
