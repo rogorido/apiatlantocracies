@@ -80,7 +80,7 @@ async function routes(fastify, options) {
         persondetails.name
       );
 
-      console.log(personnetwork);
+      // console.log(personnetwork);
       return reply
         .status(200)
         .send({ persondetails, personeventstimeline, personnetwork });

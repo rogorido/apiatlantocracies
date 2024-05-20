@@ -9,6 +9,7 @@ const createDataPersonsNetwork = (data, originalperson) => {
     shape: "diamond",
   });
 
+  // We have to check if data is an array and is not empty
   if (Array.isArray(data) && data.length > 0) {
     data.map((item, idx) => {
       nodes.push({

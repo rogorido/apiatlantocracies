@@ -1,2 +1,10 @@
 # simple request
-GET http://localhost:8008/
+#GET http://localhost:8008/
+
+
+POST http://localhost:8008/groups
+Content-Type: application/json
+
+{
+  "gender": "H"
+}
