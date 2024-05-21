@@ -1,4 +1,4 @@
-const { pipeline } = require("../queries/macrofilter/filter");
+const { macrofilterConverter } = require("../queries/macrofilter/filter");
 
 const { birthYearsBucket } = require("../queries/persons/births");
 
@@ -25,7 +25,7 @@ async function routes(fastify, options) {
   fastify.post("/", async (request, reply) => {
     try {
       console.log(request.body);
-      const filter = pipeline(request.body);
+      const filter = macrofilterConverter(request.body);
 
       console.log(filter);
 

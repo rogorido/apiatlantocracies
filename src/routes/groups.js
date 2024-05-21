@@ -1,5 +1,10 @@
 const { personDetails } = require("../utils/personDetalis");
 
+const { macrofilterConverter } = require("../queries/macrofilter/filter");
+const { cytorelationsfilter } = require("../queries/groups/relations");
+
+const { createPersonsNetworkCyto } = require("../utils/personNetwork");
+
 /**
  * Encapsulates the routes
  * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
@@ -11,7 +16,7 @@ async function routes(fastify, options) {
 
   fastify.post("/", async (request, reply) => {
     try {
-      const filter = pipeline(request.body);
+      const filter = macrofilterConverter(request.body);
 
       console.log(filter);
 
@@ -22,10 +27,15 @@ async function routes(fastify, options) {
         return personDetails(person);
       });
 
-      const personsrelations = createPersonsNetworkCyto(result);
+      // const personsrelations = await vpersons.aggregate(cytorelationsfilter).toArray();
+      const personsrelations = await vpersons.aggregate([{ '$match': filter }, ...cytorelationsfilter]).toArray();
+      const personsrelationsDetails = personsrelations.map((person) => {
+        return personDetails(person);
+      });
+      const personsrelationscyto = createPersonsNetworkCyto(personsrelationsDetails);
 
       reply.status(200).send({
-        personsDetails, personsrelations
+        personsDetails, personsrelations, personsrelationscyto
       });
     } catch (error) {
       console.error(error);

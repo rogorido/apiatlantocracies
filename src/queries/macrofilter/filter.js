@@ -1,4 +1,4 @@
-const pipeline = (filter) => {
+const macrofilterConverter = (filter) => {
   if (filter.place) {
     filter.$or = [
       { placebirth: filter.place },
@@ -30,4 +30,4 @@ const pipeline = (filter) => {
   return filter;
 };
 
-module.exports = { pipeline };
+module.exports = { macrofilterConverter };
