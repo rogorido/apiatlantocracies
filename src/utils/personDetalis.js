@@ -83,4 +83,4 @@ function extractYear(fecha) {
   }
 }
 
-module.exports = { personDetails, };
+module.exports = { personDetails };

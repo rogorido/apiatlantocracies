@@ -34,4 +34,23 @@ const createDataPersonsNetwork = (data, originalperson) => {
   return { nodes: nodes, edges: edges };
 };
 
-module.exports = { createDataPersonsNetwork };
+const createPersonsNetworkCyto = (data) => {
+  let nodes = [];
+  let edges = [];
+
+  data.map((item) => {
+    nodes.push({
+      data: {
+        id: item._id,
+        label: item.name,
+      },
+      classes: [item.gender],
+    });
+    // NOTE: why do I need this?
+    return {};
+  });
+
+  return { nodes: nodes, edges: edges };
+};
+
+module.exports = { createDataPersonsNetwork, createPersonsNetworkCyto };
