@@ -1,3 +1,11 @@
+const crypto = require('crypto');
+
+// Idea from chapgpt. 
+function generateRandomId(length) {
+  // Generate a random buffer and convert it to a hexadecimal string
+  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
+}
+
 // TODO: faltarían añadir padres, madres, etc.
 // Cogemos por ahora solo las personas de las relaciones
 const createDataPersonsNetwork = (data, originalperson) => {
@@ -38,14 +46,40 @@ const createPersonsNetworkCyto = (data) => {
   let nodes = [];
   let edges = [];
 
+  // first the main persons
   data.map((item) => {
     nodes.push({
       data: {
         id: item._id,
         label: item.name,
       },
-      classes: [item.gender],
+      classes: [item.gender, "mainperson"],
     });
+
+    if (Array.isArray(item.relations) && item.relations.length > 0) {
+      item.relations.map((relation) => {
+        if (relation.hasId && relation._id) {
+          relation.ownid = generateRandomId(18);
+          nodes.push({
+            data: relation,
+            classes: [relation.gender, "relatedPerson"]
+          });
+
+        } else {
+          relation.id = generateRandomId(18);
+
+          nodes.push({
+            data: relation, classes: [relation.gender, "relatedPerson"],
+          });
+        }
+        // we add finally the edge...
+        relation.typeRelation = relation.typeRel.replace(/\s+/g, '')
+        edges.push({
+          data: { source: item._id, target: relation.id }, classes: [relation.typeRelation]
+        })
+      });
+    }
+
     // NOTE: why do I need this?
     return {};
   });
