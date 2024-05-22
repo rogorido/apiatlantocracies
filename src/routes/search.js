@@ -2,6 +2,8 @@ const { macrofilterConverter } = require("../queries/macrofilter/filter");
 
 const { birthYearsBucket } = require("../queries/persons/births");
 
+const { postSchema, postUserSchema } = require("../schemas/schemas");
+
 const {
   createDataChart,
   createDataChartGenders,
@@ -22,6 +24,7 @@ async function routes(fastify, options) {
   // const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
+  //fastify.post("/", { schema: postUserSchema }, async (request, reply) => {
   fastify.post("/", async (request, reply) => {
     try {
       console.log(request.body);
