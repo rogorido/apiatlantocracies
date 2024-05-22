@@ -10,9 +10,18 @@ Content-Type: application/json
 }
 
 
-POST http://localhost:8008/groups
+POST http://localhost:8008/search
 Content-Type: application/json
 
 {
   "hasPositions": true
+}
+
+
+# debería dar error 
+POST http://localhost:8008/search
+Content-Type: application/json
+
+{
+  "hasFriends": true
 }

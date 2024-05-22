@@ -75,7 +75,7 @@ const createPersonsNetworkCyto = (data) => {
         // we add finally the edge...
         relation.typeRelation = relation.typeRel.replace(/\s+/g, '')
         edges.push({
-          data: { source: item._id, target: relation.id }, classes: [relation.typeRelation]
+          data: { source: item._id, target: relation.id, type: relation.typeRel }, classes: [relation.typeRelation]
         })
       });
     }
