@@ -92,4 +92,32 @@ const createPersonsNetworkCyto = (data) => {
   return { nodes: nodes, edges: edges };
 };
 
-module.exports = { createDataPersonsNetwork, createPersonsNetworkCyto };
+const createPersonsNetworkTable = (data) => {
+  const network = [];
+
+  // We generate an ID which is useful for the datatable in the backend.
+  data.map((item) => {
+    if (Array.isArray(item.relations) && item.relations.length > 0) {
+      item.relations.map((relation) => {
+        let newnetworkitem = {
+          idItem: generateRandomId(8),
+          idMainPerson: item._id,
+          nameMainPerson: item.name,
+          genderMainPerson: item.gender,
+          typeRelation: relation.typeRel,
+          namePerson: relation.personRelated,
+          placeRelation: relation.placeRelated,
+          position: relation.position,
+
+        }
+
+        network.push(newnetworkitem);
+      })
+      return {};
+    }
+  })
+
+  return network;
+}
+
+module.exports = { createDataPersonsNetwork, createPersonsNetworkCyto, createPersonsNetworkTable };
