@@ -22,22 +22,22 @@ const postSchema = {
         hasEvents: { type: "boolean" },
         wasMarried: { type: "boolean" },
       },
-      additionalProperties: false
-    }
+      additionalProperties: false,
+    },
   },
 };
 
 const postUserSchema = {
   body: {
-    type: 'object',
+    type: "object",
     // required: ['hasPositions'],
     properties: {
-      hasPositions: { type: 'boolean' },
-      hasTitles: { type: 'boolean' },
-      gender: { type: 'string', enum: ['male', 'female', 'other'] }
+      hasPositions: { type: "boolean" },
+      hasTitles: { type: "boolean" },
+      gender: { type: "string", enum: ["male", "female", "other"] },
     },
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 };
 
 module.exports = { placeSchema, postSchema, postUserSchema };

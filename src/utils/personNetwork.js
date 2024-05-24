@@ -1,11 +1,14 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
-// Idea from chapgpt. 
-// We have to generate a ID (have we?) for the persons which do not have ID 
+// Idea from chapgpt.
+// We have to generate a ID (have we?) for the persons which do not have ID
 // for the cyto graph.
 function generateRandomId(length) {
   // Generate a random buffer and convert it to a hexadecimal string
-  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
+  return crypto
+    .randomBytes(Math.ceil(length / 2))
+    .toString("hex")
+    .slice(0, length);
 }
 
 // TODO: faltarían añadir padres, madres, etc.
@@ -54,34 +57,40 @@ const createPersonsNetworkCyto = (data) => {
       data: {
         id: item._id,
         label: item.name,
+        type: "mainperson",
       },
       classes: [item.gender, "mainperson"],
     });
 
     if (Array.isArray(item.relations) && item.relations.length > 0) {
       item.relations.map((relation) => {
-        // the problem is that there are errors in the DB: some people 
-        // in the relations have a personId field but there are not really in the DB 
+        // the problem is that there are errors in the DB: some people
+        // in the relations have a personId field but there are not really in the DB
         // Therefore we need to check if the relation has the ID field
         if (relation.hasId && relation._id) {
           relation.ownid = generateRandomId(18);
           nodes.push({
             data: relation,
-            classes: [relation.gender, "relatedPerson"]
+            classes: [relation.gender, "relatedPerson"],
           });
-
         } else {
           relation.id = generateRandomId(18);
 
           nodes.push({
-            data: relation, classes: [relation.gender, "relatedPerson"],
+            data: relation,
+            classes: [relation.gender, "relatedPerson"],
           });
         }
         // we add finally the edge...
-        relation.typeRelation = relation.typeRel.replace(/\s+/g, '')
+        relation.typeRelation = relation.typeRel.replace(/\s+/g, "");
         edges.push({
-          data: { source: item._id, target: relation.id, type: relation.typeRel }, classes: [relation.typeRelation]
-        })
+          data: {
+            source: item._id,
+            target: relation.id,
+            type: relation.typeRel,
+          },
+          classes: [relation.typeRelation],
+        });
       });
     }
 
@@ -105,19 +114,23 @@ const createPersonsNetworkTable = (data) => {
           nameMainPerson: item.name,
           genderMainPerson: item.gender,
           typeRelation: relation.typeRel,
-          namePerson: relation.personRelated,
-          placeRelation: relation.placeRelated,
-          position: relation.position,
-
-        }
+          namePersonRelated: relation.namePerson,
+          placeRelation: relation.placeRel,
+          positionRelation: relation.position,
+        };
 
         network.push(newnetworkitem);
-      })
+      });
       return {};
+
+      console.log("joder...");
     }
-  })
-
+  });
   return network;
-}
+};
 
-module.exports = { createDataPersonsNetwork, createPersonsNetworkCyto, createPersonsNetworkTable };
+module.exports = {
+  createDataPersonsNetwork,
+  createPersonsNetworkCyto,
+  createPersonsNetworkTable,
+};
