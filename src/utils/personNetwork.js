@@ -117,6 +117,7 @@ const createPersonsNetworkTable = (data) => {
           namePersonRelated: relation.namePerson,
           placeRelation: relation.placeRel,
           positionRelation: relation.position,
+          histBirthRelated: relation.histBirth,
         };
 
         network.push(newnetworkitem);
