@@ -21,6 +21,7 @@ const { placeSchema } = require("../schemas/schemas");
 
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
+  const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
   fastify.get("/", async (request, reply) => {
     try {
@@ -58,7 +59,7 @@ async function routes(fastify, options) {
       const personsbirths = await persons.find({ placebirth: place }).toArray();
 
       // pero esto es lo mismo,no?
-      const personsall = await persons
+      const personsall = await vpersons
         .aggregate(personsbyplace.pipeline(place))
         .toArray();
 
