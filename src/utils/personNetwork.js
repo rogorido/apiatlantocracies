@@ -123,15 +123,29 @@ const createPersonsNetworkTable = (data) => {
         network.push(newnetworkitem);
       });
       return {};
-
-      console.log("joder...");
     }
   });
   return network;
 };
 
+function extractIds(data) {
+  let ids = [];
+  data.map((item) => {
+    ids.push(item._id);
+    if (Array.isArray(item.relations) && item.relations.length > 0) {
+      item.relations.map((relation) => {
+        ids.push(relation._id);
+      });
+      return {};
+    }
+    return {};
+  });
+  return ids;
+}
+
 module.exports = {
   createDataPersonsNetwork,
   createPersonsNetworkCyto,
   createPersonsNetworkTable,
+  extractIds,
 };
