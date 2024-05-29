@@ -1,6 +1,6 @@
 {
   "name": "apiatlantocracies",
-  "version": "0.8.34",
+  "version": "0.8.35",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -11,7 +11,7 @@
   "license": "ISC",
   "description": "API for the MongoDB Atlantocracies.",
   "devDependencies": {
-    "nodemon": "^3.1.1"
+    "nodemon": "^3.1.2"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
