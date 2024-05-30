@@ -7,6 +7,7 @@
 const q = require("../queries/general");
 
 const { createDataChartGenders } = require("../utils/dataForChart");
+const { pl_places_global } = require("../queries/places/places");
 
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
@@ -17,15 +18,23 @@ async function routes(fastify, options) {
 
   fastify.get("/generalstats", async (request, reply) => {
     try {
-      const [events, positions, titles, relations, genders, individuals] =
-        await Promise.all([
-          persons.aggregate(q.eventstypes).toArray(),
-          persons.aggregate(q.positionstypes).toArray(),
-          persons.aggregate(q.titlestypes).toArray(),
-          persons.aggregate(q.relationstypes).toArray(),
-          persons.aggregate(q.genders).toArray(),
-          persons.countDocuments(),
-        ]);
+      const [
+        events,
+        positions,
+        titles,
+        relations,
+        genders,
+        places,
+        individuals,
+      ] = await Promise.all([
+        persons.aggregate(q.eventstypes).toArray(),
+        persons.aggregate(q.positionstypes).toArray(),
+        persons.aggregate(q.titlestypes).toArray(),
+        persons.aggregate(q.relationstypes).toArray(),
+        persons.aggregate(q.genders).toArray(),
+        persons.aggregate(pl_places_global).toArray(),
+        persons.countDocuments(),
+      ]);
 
       const gendersChartData = createDataChartGenders(genders);
 
@@ -36,6 +45,7 @@ async function routes(fastify, options) {
         totalRelations: relations.length,
         totalGenders: genders,
         totalPersons: individuals,
+        totalPlaces: places.length,
         gendersChartData,
       });
     } catch (error) {
