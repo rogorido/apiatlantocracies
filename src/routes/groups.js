@@ -63,7 +63,7 @@ async function routes(fastify, options) {
         .aggregate([{ $match: { _id: { $in: ids } } }, ...pl_places_global])
         .toArray();
       const placesrelated = flipCoords(placesrelatedraw);
-      console.log(placesrelated);
+      // console.log(placesrelated);
 
       reply.status(200).send({
         personsDetails,

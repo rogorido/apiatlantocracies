@@ -78,6 +78,19 @@ const hasTitles = [
   },
 ];
 
+const hasPositions = [
+  {
+    $sortByCount: "$hasPositions",
+  },
+  {
+    $project: {
+      count: 1,
+      hasPositions: "$_id",
+      _id: 0,
+    },
+  },
+];
+
 module.exports = {
   eventstypes,
   positionstypes,
@@ -85,4 +98,5 @@ module.exports = {
   titlestypes,
   genders,
   hasTitles,
+  hasPositions,
 };

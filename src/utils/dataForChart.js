@@ -80,6 +80,23 @@ const createDataChartHasTitles = (data) => {
   return chartData;
 };
 
+const createDataChartHasPositions = (data) => {
+  const etiquetas = data.map((item) => item.hasPositions);
+  const v_total = data.map((item) => +item.count);
+
+  const totales = {
+    label: "Totals",
+    data: v_total,
+  };
+
+  const chartData = {
+    labels: etiquetas,
+    datasets: [totales],
+  };
+
+  return chartData;
+};
+
 /**
  * Creates coordinates from the given data.
  *
@@ -97,5 +114,6 @@ module.exports = {
   createDataChartGenders,
   createDataChartHistBirths,
   createDataChartHasTitles,
+  createDataChartHasPositions,
   createCoordinates,
 };

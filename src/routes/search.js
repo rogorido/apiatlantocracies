@@ -9,6 +9,7 @@ const {
   createDataChartGenders,
   createDataChartHistBirths,
   createDataChartHasTitles,
+  createDataChartHasPositions,
 } = require("../utils/dataForChart");
 
 // TODO: mejorar este sistema
@@ -37,14 +38,16 @@ async function routes(fastify, options) {
         .aggregate([{ $match: filter }, ...q.genders])
         .toArray();
 
-      console.log(gendersData);
-
       const histBirthsData = await vpersons
         .aggregate([{ $match: filter }, ...qq.histBirth])
         .toArray();
 
-      const hastitledata = await vpersons
+      const hasTitlesData = await vpersons
         .aggregate([{ $match: filter }, ...q.hasTitles])
+        .toArray();
+
+      const hasPositionsData = await vpersons
+        .aggregate([{ $match: filter }, ...q.hasPositions])
         .toArray();
 
       const decadesBirths = await vpersons
@@ -55,9 +58,12 @@ async function routes(fastify, options) {
 
       const gendersChartData = createDataChartGenders(gendersData);
       const histBirthsChartData = createDataChartHistBirths(histBirthsData);
-      const hasTitlesChartData = createDataChartHasTitles(hastitledata);
+      const hasTitlesChartData = createDataChartHasTitles(hasTitlesData);
+      const hasPositionsChartData =
+        createDataChartHasPositions(hasPositionsData);
       const decadesBirthsChartData = createDataChart(decadesBirths);
 
+      console.log(hasTitlesData);
       reply.status(200).send({
         result,
         gendersData,
@@ -65,6 +71,9 @@ async function routes(fastify, options) {
         histBirthsData,
         histBirthsChartData,
         hasTitlesChartData,
+        hasTitlesData,
+        hasPositionsChartData,
+        hasPositionsData,
         decadesBirthsChartData,
       });
     } catch (error) {
