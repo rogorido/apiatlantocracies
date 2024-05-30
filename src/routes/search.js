@@ -63,7 +63,18 @@ async function routes(fastify, options) {
         createDataChartHasPositions(hasPositionsData);
       const decadesBirthsChartData = createDataChart(decadesBirths);
 
-      console.log(hasTitlesData);
+      // we extract all positions to create a table of positions
+      const positionsTable = await vpersons
+        .aggregate([{ $match: filter }, ...q.positionsTable])
+        .toArray();
+
+      // we extract all positions to create a table of positions
+      const positionsTableTree = await vpersons
+        .aggregate([{ $match: filter }, ...q.positionsTableDesagregated])
+        .toArray();
+
+      console.log(positionsTableTree);
+
       reply.status(200).send({
         result,
         gendersData,
@@ -74,6 +85,8 @@ async function routes(fastify, options) {
         hasTitlesData,
         hasPositionsChartData,
         hasPositionsData,
+        positionsTable,
+        positionsTableTree,
         decadesBirthsChartData,
       });
     } catch (error) {

@@ -91,6 +91,82 @@ const hasPositions = [
   },
 ];
 
+// we extract all positions to create a table of positions
+// this is raw data
+const positionsTable = [
+  { $unwind: { path: "$positions" } },
+  {
+    $replaceRoot: {
+      newRoot: {
+        $mergeObjects: ["$positions"],
+      },
+    },
+  },
+];
+
+// positionsTable with data desagregados
+const positionsTableDesagregated = [
+  { $unwind: { path: "$positions" } },
+  {
+    $replaceRoot: {
+      newRoot: {
+        $mergeObjects: ["$positions"],
+      },
+    },
+  },
+  {
+    $group: {
+      _id: {
+        namePos: "$namePos",
+        countryPos: "$countryPos",
+      },
+      count: { $sum: 1 },
+    },
+  },
+  {
+    $group: {
+      _id: "$_id.namePos",
+      total: { $sum: "$count" },
+      children: {
+        $push: {
+          key: { $toString: "$_id.countryPos" },
+          data: {
+            name: "$_id.countryPos",
+            count: "$count",
+          },
+        },
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      key: { $toString: "$_id" },
+      data: {
+        name: "$_id",
+        count: "$total",
+      },
+      children: 1,
+    },
+  },
+  {
+    $project: {
+      key: 1,
+      data: 1,
+      children: {
+        $map: {
+          input: "$children",
+          as: "child",
+          in: {
+            key: "$$child.key",
+            data: "$$child.data",
+          },
+        },
+      },
+    },
+  },
+];
+
 module.exports = {
   eventstypes,
   positionstypes,
@@ -99,4 +175,6 @@ module.exports = {
   genders,
   hasTitles,
   hasPositions,
+  positionsTable,
+  positionsTableDesagregated,
 };
