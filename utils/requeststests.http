@@ -25,3 +25,12 @@ Content-Type: application/json
 {
   "hasFriends": true
 }
+
+POST http://localhost:8008/groups
+Content-Type: application/json
+
+{
+  "hasPositions": true
+}
+
+

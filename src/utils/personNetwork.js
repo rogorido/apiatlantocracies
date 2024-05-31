@@ -113,6 +113,7 @@ const createPersonsNetworkTable = (data) => {
           idMainPerson: item._id,
           nameMainPerson: item.name,
           genderMainPerson: item.gender,
+          histBirthMainPerson: item.histBirth,
           typeRelation: relation.typeRel,
           namePersonRelated: relation.namePerson,
           placeRelation: relation.placeRel,

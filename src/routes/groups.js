@@ -49,6 +49,8 @@ async function routes(fastify, options) {
       const personsrelationstable = createPersonsNetworkTable(
         personsrelationsDetails,
       );
+      console.log(personsrelationstable);
+
       // NOTE: this is not a good solution. The problem is that we need the collection persons since
       // there are all relations, etc. And not in the view personascontodo. But we can not use
       // the filter with persons since it lacks some of the fiedls in the view.
