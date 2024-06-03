@@ -2,7 +2,7 @@ const { macrofilterConverter } = require("../queries/macrofilter/filter");
 
 const { birthYearsBucket } = require("../queries/persons/births");
 
-const { postSchema, postUserSchema } = require("../schemas/schemas");
+// const { postSchema, postUserSchema } = require("../schemas/schemas");
 
 const {
   createDataChart,
@@ -12,9 +12,8 @@ const {
   createDataChartHasPositions,
 } = require("../utils/dataForChart");
 
-// TODO: mejorar este sistema
-const q = require("../queries/general");
-const qq = require("../queries/persons/births");
+const querygen = require("../queries/general");
+const querybirths = require("../queries/persons/births");
 
 /**
  * Encapsulates the routes
@@ -35,19 +34,19 @@ async function routes(fastify, options) {
 
       const result = await vpersons.find(filter).toArray();
       const gendersData = await vpersons
-        .aggregate([{ $match: filter }, ...q.genders])
+        .aggregate([{ $match: filter }, ...querygen.genders])
         .toArray();
 
       const histBirthsData = await vpersons
-        .aggregate([{ $match: filter }, ...qq.histBirth])
+        .aggregate([{ $match: filter }, ...querybirths.histBirth])
         .toArray();
 
       const hasTitlesData = await vpersons
-        .aggregate([{ $match: filter }, ...q.hasTitles])
+        .aggregate([{ $match: filter }, ...querygen.hasTitles])
         .toArray();
 
       const hasPositionsData = await vpersons
-        .aggregate([{ $match: filter }, ...q.hasPositions])
+        .aggregate([{ $match: filter }, ...querygen.hasPositions])
         .toArray();
 
       const decadesBirths = await vpersons
@@ -65,12 +64,12 @@ async function routes(fastify, options) {
 
       // we extract all positions to create a table of positions
       const positionsTable = await vpersons
-        .aggregate([{ $match: filter }, ...q.positionsTable])
+        .aggregate([{ $match: filter }, ...querygen.positionsTable])
         .toArray();
 
       // we extract all positions to create a table of positions
       const positionsTableTree = await vpersons
-        .aggregate([{ $match: filter }, ...q.positionsTableDesagregated])
+        .aggregate([{ $match: filter }, ...querygen.positionsTableDesagregated])
         .toArray();
 
       console.log(positionsTableTree);
