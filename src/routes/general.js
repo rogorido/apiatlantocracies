@@ -46,6 +46,7 @@ async function routes(fastify, options) {
         totalGenders: genders,
         totalPersons: individuals,
         totalPlaces: places.length,
+        version: process.env.npm_package_version,
         gendersChartData,
       });
     } catch (error) {
