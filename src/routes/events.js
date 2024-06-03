@@ -1,6 +1,5 @@
 const eventsbyplace = require("../queries/events/byplace");
 
-// TODO: esto realmente hay que cambiarle el nombre
 const { createDataChartHistBirths } = require("../utils/dataForChart");
 
 const { placeSchema } = require("../schemas/schemas");
