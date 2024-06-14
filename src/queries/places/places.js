@@ -169,10 +169,15 @@ const pl_places_global = [
   },
   {
     $match: {
-      place: {
-        $exists: true,
-        $ne: null,
-      },
+      $and: [
+        {
+          place: {
+            $exists: true,
+            $ne: null,
+          },
+        },
+        { coords: { $ne: null } },
+      ],
     },
   },
   {
