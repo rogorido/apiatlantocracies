@@ -82,7 +82,10 @@ const createPersonsNetworkCyto = (data) => {
           });
         }
         // we add finally the edge...
-        relation.typeRelation = relation.typeRel.replace(/\s+/g, "");
+        // relation.typeRelation = relation.typeRel.replace(/\s+/g, "");
+        relation.typeRelation =
+          relation.typeRel?.replace(/\s+/g, "") ?? "Not defined";
+
         edges.push({
           data: {
             source: item._id,
