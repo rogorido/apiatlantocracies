@@ -20,6 +20,7 @@ fastify.register(require("@fastify/cors"), {
   origin: [
     "http://localhost:3000",
     "https://atlanto.digitalhumanities.digital",
+    "https://atlantocracies.digitalhumanities.digital",
   ],
   methods: ["GET", "POST", "OPTIONS"],
 });
