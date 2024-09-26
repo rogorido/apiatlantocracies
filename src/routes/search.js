@@ -30,7 +30,7 @@ async function routes(fastify, options) {
       console.log(request.body);
       const filter = macrofilterConverter(request.body);
 
-      console.log(filter);
+      // console.log(filter);
 
       const result = await vpersons.find(filter).toArray();
       const gendersData = await vpersons

@@ -25,6 +25,9 @@ const macrofilterConverter = (filter) => {
     delete filter.histBirths;
   }
 
+  if (filter.source) {
+    filter.source = { $in: filter.source };
+  }
   console.log(JSON.stringify(filter, null, 2));
 
   return filter;

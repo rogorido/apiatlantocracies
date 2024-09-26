@@ -47,10 +47,17 @@ const titlestypes = [
   },
 ];
 
-/*
- * Requires the MongoDB Node.js Driver
- * https://mongodb.github.io/node-mongodb-native
- */
+const titlescontinents = [
+  {
+    $unwind: { path: "$titles" },
+  },
+  {
+    $sortByCount: "$titles.continental",
+  },
+  {
+    $match: { _id: { $ne: null } },
+  },
+];
 
 const genders = [
   {
@@ -62,6 +69,12 @@ const genders = [
       gender: "$_id",
       _id: 0,
     },
+  },
+];
+
+const sources = [
+  {
+    $sortByCount: "$source",
   },
 ];
 
@@ -172,9 +185,11 @@ module.exports = {
   positionstypes,
   relationstypes,
   titlestypes,
+  titlescontinents,
   genders,
   hasTitles,
   hasPositions,
   positionsTable,
   positionsTableDesagregated,
+  sources,
 };

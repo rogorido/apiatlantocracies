@@ -85,10 +85,23 @@ async function routes(fastify, options) {
     }
   });
 
+  fastify.get("/sources", async (request, reply) => {
+    try {
+      const result = await persons.aggregate(q.sources).toArray();
+      reply.status(200).send(result);
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("error en el servidor o en la consulta");
+    }
+  });
+
   fastify.get("/titlestypes", async (request, reply) => {
     try {
-      const result = await persons.aggregate(q.titlestypes).toArray();
-      reply.status(200).send(result);
+      const titlestypes = await persons.aggregate(q.titlestypes).toArray();
+      const titlescontinents = await persons
+        .aggregate(q.titlescontinents)
+        .toArray();
+      reply.status(200).send({ titlestypes, titlescontinents });
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");
