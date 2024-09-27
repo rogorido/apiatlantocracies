@@ -117,7 +117,7 @@ async function routes(fastify, options) {
       const result = await persons
         .aggregate([{ $match: { _id: new ObjectId(id) } }, ...pl_places_global])
         .toArray();
-      console.log(result);
+      // console.log(result);
       return reply.status(200).send(result);
     } catch (error) {
       console.error(error);

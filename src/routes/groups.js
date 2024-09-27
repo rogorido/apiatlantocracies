@@ -25,7 +25,7 @@ async function routes(fastify, options) {
     try {
       const filter = macrofilterConverter(request.body);
 
-      console.log(filter);
+      // console.log(filter);
 
       const result = await vpersons.find(filter).toArray();
 
@@ -49,7 +49,7 @@ async function routes(fastify, options) {
       const personsrelationstable = createPersonsNetworkTable(
         personsrelationsDetails,
       );
-      console.log(personsrelationstable);
+      // console.log(personsrelationstable);
 
       // NOTE: this is not a good solution. The problem is that we need the collection persons since
       // there are all relations, etc. And not in the view personascontodo. But we can not use

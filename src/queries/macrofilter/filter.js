@@ -25,6 +25,15 @@ const macrofilterConverter = (filter) => {
     delete filter.histBirths;
   }
 
+  if (filter.titles) {
+    const { nomTit, continental } = filter.titles;
+
+    filter.titles = { $elemMatch: { nomTit: { $in: nomTit } } };
+
+    if (continental) {
+      filter.titles.$elemMatch.continental = { $in: continental };
+    }
+  }
   if (filter.source) {
     filter.source = { $in: filter.source };
   }

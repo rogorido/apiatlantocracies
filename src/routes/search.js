@@ -27,7 +27,7 @@ async function routes(fastify, options) {
   //fastify.post("/", { schema: postUserSchema }, async (request, reply) => {
   fastify.post("/", async (request, reply) => {
     try {
-      console.log(request.body);
+      // console.log(request.body);
       const filter = macrofilterConverter(request.body);
 
       // console.log(filter);
@@ -72,7 +72,7 @@ async function routes(fastify, options) {
         .aggregate([{ $match: filter }, ...querygen.positionsTableDesagregated])
         .toArray();
 
-      console.log(positionsTableTree);
+      // console.log(positionsTableTree);
 
       reply.status(200).send({
         result,
