@@ -11,6 +11,7 @@ function generateRandomId(length) {
     .slice(0, length);
 }
 
+// NOTE: creo q esto ahora no lo estoy usando, sino la siguiente función.
 // TODO: faltarían añadir padres, madres, etc.
 // Cogemos por ahora solo las personas de las relaciones
 const createDataPersonsNetwork = (data, originalperson) => {
@@ -47,9 +48,12 @@ const createDataPersonsNetwork = (data, originalperson) => {
   return { nodes: nodes, edges: edges };
 };
 
-const createPersonsNetworkCyto = (data) => {
+// Network for using in cytoscape graph.
+const createPersonsNetworkCyto = async (data, db) => {
   let nodes = [];
   let edges = [];
+
+  const persons = db.collection("persons");
 
   // first the main persons
   data.map((item) => {
@@ -62,6 +66,7 @@ const createPersonsNetworkCyto = (data) => {
       classes: [item.gender, "mainperson"],
     });
 
+    // primero añadimos las relations que están en el subdocument relations.
     if (Array.isArray(item.relations) && item.relations.length > 0) {
       item.relations.map((relation) => {
         // the problem is that there are errors in the DB: some people

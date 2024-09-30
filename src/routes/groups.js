@@ -41,10 +41,13 @@ async function routes(fastify, options) {
       const personsrelationsDetails = personsrelations.map((person) => {
         return personDetails(person);
       });
-      const personsrelationscyto = createPersonsNetworkCyto(
+      const personsrelationscyto = await createPersonsNetworkCyto(
         personsrelationsDetails,
+        fastify.mongo.atlanto.db,
       );
 
+      // TODO: aquí habría q añadir un await como tengo justo arriba
+      // lo q supone ponerle además un async a la función!
       // transform the data into a table format for use in the frontend.
       const personsrelationstable = createPersonsNetworkTable(
         personsrelationsDetails,
