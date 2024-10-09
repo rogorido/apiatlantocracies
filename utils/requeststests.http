@@ -34,3 +34,6 @@ Content-Type: application/json
 }
 
 
+GET http://localhost:8008/relations/?reltype=Informante%20de%20título
+
+
