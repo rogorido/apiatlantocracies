@@ -9,11 +9,17 @@ async function routes(fastify, options) {
     const { reltype } = request.params;
 
     try {
-      const result = await persons
-        .aggregate(qreltypes.pipeline(reltype))
+      // general data about the concrete relation
+      const relationid = await persons
+        .aggregate(qreltypes.aggrelation(reltype))
         .toArray();
 
-      reply.status(200).send(result);
+      // general data about the concrete relation
+      const positions = await persons
+        .aggregate(qreltypes.aggpositions(reltype))
+        .toArray();
+
+      reply.status(200).send({ relationid, positions });
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");

@@ -1,4 +1,8 @@
-const pipeline = (reltype) => {
+// We have two queries:
+// 1. aggregate for concrete relation:
+// 2. aggregate of positions.
+
+const aggrelation = (reltype) => {
   const hostias = [
     {
       $unwind: "$relations",
@@ -51,8 +55,37 @@ const pipeline = (reltype) => {
     },
   ];
 
-  console.log(JSON.stringify(hostias, null, 2));
+  // console.log(JSON.stringify(hostias, null, 2));
   return hostias;
 };
 
-module.exports = { pipeline };
+const aggpositions = (reltype) => {
+  const hostias = [
+    {
+      $unwind: "$relations",
+    },
+    {
+      $match: {
+        "relations.typeRel": reltype,
+      },
+    },
+    {
+      $group: {
+        _id: "$relations.position",
+        total: {
+          $sum: 1,
+        },
+      },
+    },
+    {
+      $sort: {
+        total: -1,
+      },
+    },
+  ];
+
+  // console.log(JSON.stringify(hostias, null, 2));
+  return hostias;
+};
+
+module.exports = { aggrelation, aggpositions };
