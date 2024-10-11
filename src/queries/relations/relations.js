@@ -15,7 +15,7 @@ const aggrelation = (reltype) => {
     {
       $group: {
         _id: "$relations.namePerson",
-        totalInformants: {
+        totalInformations: {
           $sum: 1,
         },
         positions: {
@@ -30,15 +30,32 @@ const aggrelation = (reltype) => {
         personsWithRelation: {
           $addToSet: {
             _id: "$_id",
+            name: "$name",
             birthdate: "$birthdate",
+            birthyear: "$birthyear",
+            deathyear: "$deathyear",
+            hasFather: "$hasFather",
+            hasMother: "$hasMother",
+            continentBirth: "$continentBirth",
+            countryBirth: "$countryBirth",
+            placeBirth: "$placeBirth",
+            placeDeath: "$placeDeath",
+            tiposTitles: "$tiposTitles",
+            tiposPositions: "$tiposPositions",
             gender: "$gender",
+            wasMarried: "$wasMarried",
+            numberofRelations: "$numberofRelations",
+            numberofEvents: "$numberofEvents",
+            numberofPositions: "$numberofPositions",
+            numberofTitles: "$numberofTitles",
+            hizoTestamento: "$hizoTestamento",
           },
         },
       },
     },
     {
       $project: {
-        totalInformants: 1,
+        totalInformations: 1,
         personsWithRelation: 1,
         positions: 1,
         titlesInf: 1,
@@ -72,14 +89,14 @@ const aggpositions = (reltype) => {
     {
       $group: {
         _id: "$relations.position",
-        total: {
+        count: {
           $sum: 1,
         },
       },
     },
     {
       $sort: {
-        total: -1,
+        count: -1,
       },
     },
   ];
