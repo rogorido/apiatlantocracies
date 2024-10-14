@@ -2,6 +2,7 @@ const qreltypes = require("../queries/relations/relations");
 const {
   aggOriginsPlaces,
   aggOriginsCountries,
+  aggOriginsHistBirth,
 } = require("../utils/relationsUtils");
 
 async function routes(fastify, options) {
@@ -26,10 +27,17 @@ async function routes(fastify, options) {
       // aggregate of infOrigins
       const infOriginsPlaces = await aggOriginsPlaces(relationid);
       const infOriginsCountries = await aggOriginsCountries(relationid);
+      const infOriginsHistBirths = await aggOriginsHistBirth(relationid);
 
       reply
         .status(200)
-        .send({ relationid, positions, infOriginsPlaces, infOriginsCountries });
+        .send({
+          relationid,
+          positions,
+          infOriginsPlaces,
+          infOriginsCountries,
+          infOriginsHistBirths,
+        });
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");

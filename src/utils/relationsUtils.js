@@ -38,12 +38,14 @@ const aggOriginsPlaces = async (data) => {
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
     id: uuidv4(),
     data: {
-      infOrigin,
+      place: infOrigin,
+      count: null,
+      percentage: null,
     },
     children: Object.entries(counts.placeCounts).map(([place, count]) => ({
       id: uuidv4(),
       data: {
-        placeBirth: place,
+        place: place,
         count,
         percentage: ((count / counts.totalPlaces) * 100).toFixed(2) + "%",
       },
@@ -83,12 +85,63 @@ const aggOriginsCountries = async (data) => {
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
     id: uuidv4(),
     data: {
-      infOrigin,
+      place: infOrigin,
+      count: null,
+      percentage: null,
     },
     children: Object.entries(counts.countryCounts).map(([country, count]) => ({
       id: uuidv4(),
       data: {
-        countryBirth: country,
+        place: country,
+        count,
+        percentage: ((count / counts.totalCountries) * 100).toFixed(2) + "%",
+      },
+    })),
+  }));
+  return formattedResult;
+};
+
+// the same but with histBirth
+const aggOriginsHistBirth = async (data) => {
+  const result = data.reduce((acc, entry) => {
+    const { infOrigin, personsWithRelation } = entry;
+
+    if (!acc[infOrigin]) {
+      acc[infOrigin] = {
+        countryCounts: {},
+        totalCountries: 0,
+      };
+    }
+
+    personsWithRelation.forEach((person) => {
+      // we rename histBirth to countryBirth to use the same code
+      const { histBirth: countryBirth } = person;
+
+      // Contabilizar countrieBirth
+      if (countryBirth) {
+        acc[infOrigin].countryCounts[countryBirth] =
+          (acc[infOrigin].countryCounts[countryBirth] || 0) + 1;
+
+        acc[infOrigin].totalCountries += 1;
+      }
+    });
+
+    return acc;
+  }, {});
+
+  // console.log(result);
+  // Convertir a un array usando Object.entries
+  const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
+    id: uuidv4(),
+    data: {
+      place: infOrigin,
+      count: null,
+      percentage: null,
+    },
+    children: Object.entries(counts.countryCounts).map(([country, count]) => ({
+      id: uuidv4(),
+      data: {
+        place: country,
         count,
         percentage: ((count / counts.totalCountries) * 100).toFixed(2) + "%",
       },
@@ -100,4 +153,5 @@ const aggOriginsCountries = async (data) => {
 module.exports = {
   aggOriginsPlaces,
   aggOriginsCountries,
+  aggOriginsHistBirth,
 };

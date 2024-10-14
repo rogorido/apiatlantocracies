@@ -41,6 +41,7 @@ const aggrelation = (reltype) => {
             hasMother: "$hasMother",
             continentBirth: "$continentBirth",
             countryBirth: "$countryBirth",
+            histBirth: "$histBirth",
             placeBirth: "$placeBirth",
             placeDeath: "$placeDeath",
             tiposTitles: "$tiposTitles",
