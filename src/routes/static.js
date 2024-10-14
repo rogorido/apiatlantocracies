@@ -29,7 +29,7 @@ async function routes(fastify, options) {
       reply.status(200).send({ total: result });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 

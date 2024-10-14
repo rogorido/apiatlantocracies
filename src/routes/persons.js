@@ -28,7 +28,7 @@ async function routes(fastify, options) {
       reply.status(200).send(result);
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 
@@ -39,7 +39,7 @@ async function routes(fastify, options) {
       reply.status(200).send(data);
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 
@@ -54,7 +54,7 @@ async function routes(fastify, options) {
       reply.status(200).send(result);
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 
@@ -62,7 +62,7 @@ async function routes(fastify, options) {
     const { id } = request.params;
 
     if (!id) {
-      return reply.status(500).send("error en el servidor o en la consulta");
+      return reply.status(500).send("error in the server or in the query");
     }
 
     try {
@@ -86,7 +86,7 @@ async function routes(fastify, options) {
         .send({ persondetails, personeventstimeline, personnetwork });
     } catch (error) {
       console.error(error);
-      return reply.status(500).send("error en el servidor o en la consulta");
+      return reply.status(500).send("error in the server or in the query");
     }
   });
 
@@ -97,7 +97,7 @@ async function routes(fastify, options) {
       reply.status(200).send({ result, chartData: data });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 }

@@ -24,7 +24,7 @@ async function routes(fastify, options) {
         });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error en el servidor o en la consulta");
+      reply.status(500).send("error in the server or in the query");
     }
   });
 }
