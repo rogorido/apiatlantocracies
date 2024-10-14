@@ -1,8 +1,11 @@
 const qreltypes = require("../queries/relations/relations");
-const { aggOrigins } = require("../utils/relationsUtils");
+const {
+  aggOriginsPlaces,
+  aggOriginsCountries,
+} = require("../utils/relationsUtils");
 
 async function routes(fastify, options) {
-  const persons = fastify.mongo.atlanto.db.collection("persons");
+  // const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
   // NOTE: hacerlo así o con un post. Lo digo porque tienen espacios, símbolos, etc.
@@ -21,9 +24,12 @@ async function routes(fastify, options) {
         .toArray();
 
       // aggregate of infOrigins
-      const infOrigins = await aggOrigins(relationid);
+      const infOriginsPlaces = await aggOriginsPlaces(relationid);
+      const infOriginsCountries = await aggOriginsCountries(relationid);
 
-      reply.status(200).send({ relationid, positions, infOrigins });
+      reply
+        .status(200)
+        .send({ relationid, positions, infOriginsPlaces, infOriginsCountries });
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");

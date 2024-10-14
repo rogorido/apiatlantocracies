@@ -1,18 +1,25 @@
-const aggOrigins = async (data) => {
+// we need to format the data for using them in DataTree in primevue.
+// The main node needs id, and data
+// Then we have children and every children needs id and data.
+const { v4: uuidv4 } = require("uuid");
+
+// NOTE:
+// Actually we should combine aggOriginsPlaces and aggOriginsCountries
+// since the code is repeated. But it is clearer for now so...
+
+const aggOriginsPlaces = async (data) => {
   const result = data.reduce((acc, entry) => {
     const { infOrigin, personsWithRelation } = entry;
 
     if (!acc[infOrigin]) {
       acc[infOrigin] = {
         placeCounts: {},
-        countryCounts: {},
         totalPlaces: 0,
-        totalCountries: 0,
       };
     }
 
     personsWithRelation.forEach((person) => {
-      const { placeBirth, countryBirth } = person;
+      const { placeBirth } = person;
 
       // Contabilizar placeBirth
       if (placeBirth) {
@@ -21,8 +28,45 @@ const aggOrigins = async (data) => {
 
         acc[infOrigin].totalPlaces += 1;
       }
+    });
 
-      // Contabilizar countryBirth
+    return acc;
+  }, {});
+
+  // console.log(result);
+  // Convertir a un array usando Object.entries
+  const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
+    id: uuidv4(),
+    data: {
+      infOrigin,
+    },
+    children: Object.entries(counts.placeCounts).map(([place, count]) => ({
+      id: uuidv4(),
+      data: {
+        placeBirth: place,
+        count,
+        percentage: ((count / counts.totalPlaces) * 100).toFixed(2) + "%",
+      },
+    })),
+  }));
+  return formattedResult;
+};
+
+const aggOriginsCountries = async (data) => {
+  const result = data.reduce((acc, entry) => {
+    const { infOrigin, personsWithRelation } = entry;
+
+    if (!acc[infOrigin]) {
+      acc[infOrigin] = {
+        countryCounts: {},
+        totalCountries: 0,
+      };
+    }
+
+    personsWithRelation.forEach((person) => {
+      const { countryBirth } = person;
+
+      // Contabilizar countrieBirth
       if (countryBirth) {
         acc[infOrigin].countryCounts[countryBirth] =
           (acc[infOrigin].countryCounts[countryBirth] || 0) + 1;
@@ -37,23 +81,23 @@ const aggOrigins = async (data) => {
   // console.log(result);
   // Convertir a un array usando Object.entries
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
-    infOrigin,
-    placeCounts: Object.entries(counts.placeCounts).map(([place, count]) => ({
-      placeBirth: place,
-      count,
-      percentage: ((count / counts.totalPlaces) * 100).toFixed(2) + "%",
-    })),
-    countryCounts: Object.entries(counts.countryCounts).map(
-      ([country, count]) => ({
+    id: uuidv4(),
+    data: {
+      infOrigin,
+    },
+    children: Object.entries(counts.countryCounts).map(([country, count]) => ({
+      id: uuidv4(),
+      data: {
         countryBirth: country,
         count,
         percentage: ((count / counts.totalCountries) * 100).toFixed(2) + "%",
-      }),
-    ),
+      },
+    })),
   }));
   return formattedResult;
 };
 
 module.exports = {
-  aggOrigins,
+  aggOriginsPlaces,
+  aggOriginsCountries,
 };
