@@ -14,7 +14,10 @@ const aggrelation = (reltype) => {
     },
     {
       $group: {
-        _id: "$relations.namePerson",
+        _id: {
+          nameRelationPerson: "$relations.namePerson",
+          infOrigin: "$relations.infOrigin",
+        },
         totalInformations: {
           $sum: 1,
         },
@@ -55,6 +58,8 @@ const aggrelation = (reltype) => {
     },
     {
       $project: {
+        _id: "$_id.nameRelationPerson",
+        infOrigin: "$_id.infOrigin",
         totalInformations: 1,
         personsWithRelation: 1,
         positions: 1,

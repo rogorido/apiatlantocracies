@@ -1,4 +1,5 @@
 const qreltypes = require("../queries/relations/relations");
+const { aggOrigins } = require("../utils/relationsUtils");
 
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
@@ -19,7 +20,10 @@ async function routes(fastify, options) {
         .aggregate(qreltypes.aggpositions(reltype))
         .toArray();
 
-      reply.status(200).send({ relationid, positions });
+      // aggregate of infOrigins
+      const infOrigins = await aggOrigins(relationid);
+
+      reply.status(200).send({ relationid, positions, infOrigins });
     } catch (error) {
       console.error(error);
       reply.status(500).send("error en el servidor o en la consulta");
