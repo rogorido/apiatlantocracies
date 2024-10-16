@@ -109,7 +109,7 @@ const createPersonsNetworkCyto = async (data, db) => {
   return { nodes: nodes, edges: edges };
 };
 
-const createPersonsNetworkTable = (data) => {
+const createPersonsNetworkTable = async (data) => {
   const network = [];
 
   // We generate an ID which is useful for the datatable in the backend.

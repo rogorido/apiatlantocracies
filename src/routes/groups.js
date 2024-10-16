@@ -46,10 +46,8 @@ async function routes(fastify, options) {
         fastify.mongo.atlanto.db,
       );
 
-      // TODO: aquí habría q añadir un await como tengo justo arriba
-      // lo q supone ponerle además un async a la función!
       // transform the data into a table format for use in the frontend.
-      const personsrelationstable = createPersonsNetworkTable(
+      const personsrelationstable = await createPersonsNetworkTable(
         personsrelationsDetails,
       );
       // console.log(personsrelationstable);

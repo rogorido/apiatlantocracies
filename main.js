@@ -26,7 +26,7 @@ fastify.register(require("@fastify/cors"), {
 });
 
 fastify.register(require("@fastify/rate-limit"), {
-  max: 120,
+  max: 180,
   timeWindow: "1 minute",
 });
 
