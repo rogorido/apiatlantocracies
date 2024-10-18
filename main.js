@@ -14,6 +14,30 @@ fastify.addHook("onRequest", (request, reply, done) => {
   }
 });
 
+fastify.register(require("@fastify/swagger"));
+
+fastify.register(require("@fastify/swagger-ui"), {
+  routePrefix: "/documentation",
+  uiConfig: {
+    docExpansion: "full",
+    deepLinking: false,
+  },
+  uiHooks: {
+    onRequest: function (request, reply, next) {
+      next();
+    },
+    preHandler: function (request, reply, next) {
+      next();
+    },
+  },
+  staticCSP: true,
+  transformStaticCSP: (header) => header,
+  transformSpecification: (swaggerObject, request, reply) => {
+    return swaggerObject;
+  },
+  transformSpecificationClone: true,
+});
+
 // el asunto es este: https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
 // cuando hace un POST realmente pregunta antes al servidor con el método OPTIONS...
 fastify.register(require("@fastify/cors"), {
