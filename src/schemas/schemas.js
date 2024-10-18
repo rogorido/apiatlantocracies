@@ -40,4 +40,53 @@ const postUserSchema = {
   },
 };
 
-module.exports = { placeSchema, postSchema, postUserSchema };
+const versionSchema = {
+  schema: {
+    description: "API version.",
+    tags: ["general"],
+    summary: "Version of the API apiatlantocracies",
+    response: {
+      200: {
+        description: "API version number.",
+        type: "string",
+      },
+    },
+  },
+};
+
+const generalstatsSchema = {
+  schema: {
+    description: "General statistics of the database.",
+    tags: ["general"],
+    summary: "Some general statistics of the database",
+    response: {
+      default: {
+        description: "API version number.",
+        type: "string",
+      },
+    },
+  },
+};
+
+const eventstypesSchema = {
+  schema: {
+    description: "Event types",
+    tags: ["general"],
+    summary: "Array of event types.",
+    response: {
+      default: {
+        description: "Array of event types.",
+        type: "array",
+      },
+    },
+  },
+};
+
+module.exports = {
+  placeSchema,
+  postSchema,
+  postUserSchema,
+  versionSchema,
+  generalstatsSchema,
+  eventstypesSchema,
+};

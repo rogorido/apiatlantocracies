@@ -6,13 +6,15 @@
 
 const q = require("../queries/general");
 
+const { versionSchema, eventstypesSchema } = require("../schemas/schemas");
+
 const { createDataChartGenders } = require("../utils/dataForChart");
 const { pl_places_global } = require("../queries/places/places");
 
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
 
-  fastify.get("/version", async (request, reply) => {
+  fastify.get("/version", versionSchema, async (request, reply) => {
     return { version: process.env.npm_package_version };
   });
 
@@ -55,7 +57,7 @@ async function routes(fastify, options) {
     }
   });
 
-  fastify.get("/eventstypes", async (request, reply) => {
+  fastify.get("/eventstypes", eventstypesSchema, async (request, reply) => {
     try {
       const result = await persons.aggregate(q.eventstypes).toArray();
       reply.status(200).send(result);

@@ -14,7 +14,20 @@ fastify.addHook("onRequest", (request, reply, done) => {
   }
 });
 
-fastify.register(require("@fastify/swagger"));
+fastify.register(require("@fastify/swagger"), {
+  info: {
+    description:
+      "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    version: "1.0.7",
+    title: "Swagger Petstore",
+    termsOfService: "http://swagger.io/terms/",
+    contact: { email: "apiteam@swagger.io" },
+    license: {
+      name: "Apache 2.0",
+      url: "http://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+  },
+});
 
 fastify.register(require("@fastify/swagger-ui"), {
   routePrefix: "/documentation",
