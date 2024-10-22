@@ -72,7 +72,7 @@ const cytorelationsfilter = [
               in: {
                 _id: "$$father._id", // Para mantener la referencia, si es necesario
                 id: "$$father._id", // Para mantener la referencia, si es necesario
-                typeRel: "father", // Tipo de relación como "father"
+                typeRel: "parent", // Tipo de relación como "father"
                 relatedPerson: "$$father.personId", // ID del padre
                 namePerson: "$$father.namePerson",
                 gender: "$$father.gender",
@@ -109,7 +109,7 @@ const cytorelationsfilter = [
               in: {
                 _id: "$$mother._id", // Para mantener la referencia, si es necesario
                 id: "$$mother._id", // Para mantener la referencia, si es necesario
-                typeRel: "mother", // Tipo de relación como "mother"
+                typeRel: "parent", // Tipo de relación como "mother"
                 relatedPerson: "$$mother.personId", // ID del padre
                 gender: "$$mother.gender",
                 datebirth: "$$mother.datebirth",
