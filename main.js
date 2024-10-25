@@ -72,7 +72,7 @@ fastify.register(require("./src/plugins/db"));
 
 // We declare a route
 fastify.register(require("./src/routes/general"), { prefix: "/general" });
-fastify.register(require("./src/routes/static"), { prefix: "/static" });
+// fastify.register(require("./src/routes/static"), { prefix: "/static" });
 fastify.register(require("./src/routes/persons"), { prefix: "/persons" });
 fastify.register(require("./src/routes/groups"), { prefix: "/groups" });
 fastify.register(require("./src/routes/places"), { prefix: "/places" });

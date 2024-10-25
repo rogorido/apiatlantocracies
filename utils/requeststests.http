@@ -33,7 +33,7 @@ Content-Type: application/json
   "hasPositions": true
 }
 
-
+# otro 
 GET http://localhost:8008/relations/?reltype=Informante%20de%20título
 
 
