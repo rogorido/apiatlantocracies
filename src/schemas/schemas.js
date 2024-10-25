@@ -82,6 +82,69 @@ const eventstypesSchema = {
   },
 };
 
+const searchSchema = {
+  schema: {
+    description:
+      "Main search with big filter. Returns array o objects with result, gendersData, gendersChartData, histBirthsData, histBirthsChartData, hasTitlesChartData, hasTitlesData, hasPositionsChartData, hasPositionsData, positionsTable, positionsTableTree, decadesBirthsChartData.",
+    tags: ["general"],
+    summary: "Main search filter.",
+    body: { type: "object" },
+    response: {
+      200: {
+        type: "object",
+        description: "Array objects.",
+        properties: {
+          result: { type: "array", description: "Array of persons objects." },
+          gendersData: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          gendersChartData: {
+            type: "object",
+            description: "Array of persons objects.",
+          },
+          histBirthsData: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          histBirthsChartData: {
+            type: "object",
+            description: "Array of persons objects.",
+          },
+          hasTitlesChartData: {
+            type: "object",
+            description: "Array of persons objects.",
+          },
+          hasTitlesData: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          hasPositionsChartData: {
+            type: "object",
+            description: "Array of persons objects.",
+          },
+          hasPositionsData: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          positionsTable: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          positionsTableTree: {
+            type: "array",
+            description: "Array of persons objects.",
+          },
+          decadesBirthsChartData: {
+            type: "object",
+            description: "Array of persons objects.",
+          },
+        },
+      },
+    },
+  },
+};
+
 module.exports = {
   placeSchema,
   postSchema,
@@ -89,4 +152,5 @@ module.exports = {
   versionSchema,
   generalstatsSchema,
   eventstypesSchema,
+  searchSchema,
 };
