@@ -24,8 +24,8 @@ async function routes(fastify, options) {
   // const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
-  // fastify.post("/", async (request, reply) => {
-  fastify.post("/", searchSchema, async (request, reply) => {
+  // fastify.post("/", searchSchema, async (request, reply) => {
+  fastify.post("/", async (request, reply) => {
     try {
       // console.log(request.body);
       const filter = macrofilterConverter(request.body);
@@ -61,7 +61,8 @@ async function routes(fastify, options) {
       const hasPositionsChartData =
         createDataChartHasPositions(hasPositionsData);
       const decadesBirthsChartData = createDataChart(decadesBirths);
-
+      console.log(decadesBirthsChartData);
+      //
       // we extract all positions to create a table of positions
       const positionsTable = await vpersons
         .aggregate([{ $match: filter }, ...querygen.positionsTable])

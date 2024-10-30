@@ -26,3 +26,5 @@ Returns an object with the following structure:
 | positionsTable,         | array  | Array of positions for table.                       |
 | positionsTableTree,     | object | Object for DataTree with positions.                 |
 | decadesBirthsChartData, | object | Object for chartjs with decades (births dates).     |
+
+# Route /general/generalstats
