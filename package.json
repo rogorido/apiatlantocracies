@@ -1,6 +1,6 @@
 {
   "name": "apiatlantocracies",
-  "version": "0.9.38",
+  "version": "0.9.39",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -21,7 +21,7 @@
     "@fastify/swagger": "^9.2.0",
     "@fastify/swagger-ui": "^5.1.0",
     "dotenv": "^16.4.5",
-    "fastify": "^5.0.0",
+    "fastify": "^5.1.0",
     "fastify-plugin": "^5.0.1",
     "uuid": "^11.0.2"
   }
