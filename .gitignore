@@ -131,3 +131,6 @@ dist
 
 # tests, utils, etc.
 utils/playground*
+
+usuarios.json
+
