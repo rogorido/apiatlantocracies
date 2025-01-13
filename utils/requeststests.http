@@ -36,4 +36,38 @@ Content-Type: application/json
 # otro 
 GET http://localhost:8008/relations/?reltype=Informante%20de%20título
 
+# nuevo
+POST http://localhost:8008/auth/login
+Content-Type: application/json
 
+{
+  "email": "yo@gmail.com",
+  "password": "cojonesvarios"
+}
+
+# domingo 
+POST http://localhost:8008/auth/login
+Content-Type: application/json
+
+{
+  "email": "domingo@gmail.com",
+  "password": "hostiaputa"
+}
+
+# nuevo
+POST http://localhost:8008/auth/login
+Content-Type: application/json
+
+{
+  "email": "yo@gmail.com",
+  "password": "hostias"
+}
+
+
+#nuevo
+POST http://localhost:8008/auth/me
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNjc5MjgzNCwiZXhwIjoxNzM2ODc5MjM0fQ.09EY1JCYYqwHHt34K3aqfZKZekDkNLvdRstYNsn2YPc"
+}
