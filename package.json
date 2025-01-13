@@ -1,6 +1,6 @@
 {
   "name": "apiatlantocracies",
-  "version": "0.9.41",
+  "version": "0.9.42",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -20,9 +20,11 @@
     "@fastify/rate-limit": "^10.2.2",
     "@fastify/swagger": "^9.4.1",
     "@fastify/swagger-ui": "^5.2.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1",
     "fastify-plugin": "^5.0.1",
+    "jsonwebtoken": "^9.0.2",
     "uuid": "^11.0.5"
   }
 }
