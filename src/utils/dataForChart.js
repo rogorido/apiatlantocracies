@@ -44,6 +44,24 @@ const createDataChartGenders = (data) => {
   return chartData;
 };
 
+// TODO: this is repeated code!!
+const createDataChartSources = (data) => {
+  const etiquetas = data.map((item) => item.sources);
+  const v_total = data.map((item) => +item.count);
+
+  const totales = {
+    label: "Totals",
+    data: v_total,
+  };
+
+  const chartData = {
+    labels: etiquetas,
+    datasets: [totales],
+  };
+
+  return chartData;
+};
+
 // TODO: this is repeated code!! Y sto lo estoy usando par otras cosas
 const createDataChartHistBirths = (data) => {
   const etiquetas = data.map((item) => item._id);
@@ -111,6 +129,7 @@ const createCoordinates = (data) => {
 
 module.exports = {
   createDataChart,
+  createDataChartSources,
   createDataChartGenders,
   createDataChartHistBirths,
   createDataChartHasTitles,

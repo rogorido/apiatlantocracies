@@ -76,6 +76,13 @@ const sources = [
   {
     $sortByCount: "$source",
   },
+  {
+    $project: {
+      count: 1,
+      source: "$_id",
+      _id: 1,
+    },
+  },
 ];
 
 const hasTitles = [

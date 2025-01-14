@@ -6,6 +6,7 @@ const { searchSchema } = require("../schemas/schemas");
 
 const {
   createDataChart,
+  createDataChartSources,
   createDataChartGenders,
   createDataChartHistBirths,
   createDataChartHasTitles,
@@ -45,6 +46,10 @@ async function routes(fastify, options) {
         .aggregate([{ $match: filter }, ...querygen.hasTitles])
         .toArray();
 
+      const sourcesData = await vpersons
+        .aggregate([{ $match: filter }, ...querygen.sources])
+        .toArray();
+
       const hasPositionsData = await vpersons
         .aggregate([{ $match: filter }, ...querygen.hasPositions])
         .toArray();
@@ -55,11 +60,13 @@ async function routes(fastify, options) {
 
       //console.log(histBirthsData);
 
+      const sourcesChartData = createDataChartSources(sourcesData);
       const gendersChartData = createDataChartGenders(gendersData);
       const histBirthsChartData = createDataChartHistBirths(histBirthsData);
       const hasTitlesChartData = createDataChartHasTitles(hasTitlesData);
       const hasPositionsChartData =
         createDataChartHasPositions(hasPositionsData);
+
       const decadesBirthsChartData = createDataChart(decadesBirths);
       console.log(decadesBirthsChartData);
       //
@@ -77,6 +84,8 @@ async function routes(fastify, options) {
 
       reply.status(200).send({
         result,
+        sourcesData,
+        sourcesChartData,
         gendersData,
         gendersChartData,
         histBirthsData,
