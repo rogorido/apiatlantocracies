@@ -11,11 +11,6 @@ const {
   extractIds,
 } = require("../utils/personNetwork");
 
-/**
- * Encapsulates the routes
- * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
- */
 async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
@@ -24,7 +19,6 @@ async function routes(fastify, options) {
   fastify.post("/", async (request, reply) => {
     try {
       const filter = macrofilterConverter(request.body);
-
       // console.log(filter);
 
       const result = await vpersons.find(filter).toArray();
@@ -34,7 +28,6 @@ async function routes(fastify, options) {
         return personDetails(person);
       });
 
-      // const personsrelations = await vpersons.aggregate(cytorelationsfilter).toArray();
       const personsrelations = await vpersons
         .aggregate([{ $match: filter }, ...cytorelationsfilter])
         .toArray();

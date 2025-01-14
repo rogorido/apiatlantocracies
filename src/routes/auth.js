@@ -4,15 +4,12 @@ const bcrypt = require("bcryptjs");
 // la contra es cojonesvarios con salt count 10
 const usuarios = require("../../usuarios.json");
 
-console.log(usuarios);
-
 async function routes(fastify, options) {
   fastify.post("/login", async (request, reply) => {
     const { email, password } = request.body;
 
     const user = usuarios.find((usuario) => usuario.email === email);
 
-    console.log(user);
     if (!user || !(await bcrypt.compare(password, user.password))) {
       reply.status(401).send({ message: "Invalid credentials" });
     } else {

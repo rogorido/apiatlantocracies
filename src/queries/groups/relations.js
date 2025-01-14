@@ -1,3 +1,14 @@
+/**
+ * Complex filter to add data to the relations.
+ *
+ * 1. It adds to every person data about the related person: gender,
+ * datebirth, histBirth, etc.
+ *
+ * 2. It adds the same about the father.
+ *
+ * 3. Idem about mother.
+ */
+
 const cytorelationsfilter = [
   {
     $lookup: {

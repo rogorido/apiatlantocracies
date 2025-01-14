@@ -1,4 +1,15 @@
 // I wanted to make this in mongoDB, but it is so complicated...
+
+/**
+ * Returns an array with persons and details
+ * @param {person} Object with the person we want to operate on.
+ *
+ * Returns an object with all the data of the person: events.
+ *
+ * The reason is we want to add extra fields to the documents relations,
+ * events, etc. For instance: transform the date into an usable format,
+ *
+ */
 const personDetails = (person) => {
   let updatedObject = person;
 

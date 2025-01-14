@@ -49,6 +49,7 @@ const createDataPersonsNetwork = (data, originalperson) => {
 };
 
 // Network for using in cytoscape graph.
+// TODO: add more fields to the nodes?
 const createPersonsNetworkCyto = async (data, db) => {
   let nodes = [];
   let edges = [];
