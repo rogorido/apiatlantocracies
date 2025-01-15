@@ -2,7 +2,7 @@ const personsbyplace = require("../queries/persons/byplace");
 const { histBirth, birthYearsBucket } = require("../queries/persons/births");
 const { personDetails } = require("../utils/personDetalis");
 const { createDataTimeline } = require("../utils/dataTimelne");
-const { createDataPersonsNetwork } = require("../utils/personNetwork");
+const { createPersonsNetworkCyto } = require("../utils/personNetwork");
 const { ObjectId } = require("mongodb");
 
 const { placeSchema } = require("../schemas/schemas");
@@ -74,13 +74,18 @@ async function routes(fastify, options) {
       // we create a timeline
       const personeventstimeline = createDataTimeline(persondetails);
 
-      // we create network
-      const personnetwork = createDataPersonsNetwork(
-        persondetails.relations,
-        persondetails.name
+      // Old code: we create network
+      // const personnetwork = createDataPersonsNetwork(
+      //   persondetails.relations,
+      //   persondetails.name,
+      // );
+
+      const personnetwork = await createPersonsNetworkCyto(
+        [persondetails], // we need an array!
+        fastify.mongo.atlanto.db,
       );
 
-      // console.log(personnetwork);
+      console.log(personnetwork);
       return reply
         .status(200)
         .send({ persondetails, personeventstimeline, personnetwork });
