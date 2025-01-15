@@ -37,6 +37,14 @@ const macrofilterConverter = (filter) => {
   if (filter.source) {
     filter.source = { $in: filter.source };
   }
+
+  if (filter.birthYear) {
+    filter.birthYear = { $gte: filter.birthYear[0], $lt: filter.birthYear[1] };
+  }
+
+  if (filter.deathYear) {
+    filter.deathYear = { $gte: filter.deathYear[0], $lt: filter.deathYear[1] };
+  }
   console.log(JSON.stringify(filter, null, 2));
 
   return filter;
