@@ -26,12 +26,19 @@ const macrofilterConverter = (filter) => {
   }
 
   if (filter.titles) {
-    const { nomTit, continental } = filter.titles;
+    const { nomTit, continental, yearsrange } = filter.titles;
 
     filter.titles = { $elemMatch: { nomTit: { $in: nomTit } } };
 
     if (continental) {
       filter.titles.$elemMatch.continental = { $in: continental };
+    }
+
+    if (yearsrange) {
+      filter.titles.$elemMatch.dateTitYear = {
+        $gte: yearsrange[0],
+        $lt: yearsrange[1],
+      };
     }
   }
 
