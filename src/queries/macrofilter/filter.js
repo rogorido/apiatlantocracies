@@ -34,6 +34,17 @@ const macrofilterConverter = (filter) => {
       filter.titles.$elemMatch.continental = { $in: continental };
     }
   }
+
+  if (filter.events) {
+    const { eventtype } = filter.events;
+
+    filter.events = { $elemMatch: { typeEv: { $in: eventtype } } };
+
+    // if (continental) {
+    //   filter.events.$elemMatch.continental = { $in: continental };
+    // }
+  }
+
   if (filter.source) {
     filter.source = { $in: filter.source };
   }
