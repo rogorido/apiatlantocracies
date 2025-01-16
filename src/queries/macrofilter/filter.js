@@ -36,13 +36,16 @@ const macrofilterConverter = (filter) => {
   }
 
   if (filter.events) {
-    const { eventtype } = filter.events;
+    const { eventtype, yearsrange } = filter.events;
 
     filter.events = { $elemMatch: { typeEv: { $in: eventtype } } };
 
-    // if (continental) {
-    //   filter.events.$elemMatch.continental = { $in: continental };
-    // }
+    if (yearsrange) {
+      filter.events.$elemMatch.dateEvYear = {
+        $gte: yearsrange[0],
+        $lt: yearsrange[1],
+      };
+    }
   }
 
   if (filter.source) {
