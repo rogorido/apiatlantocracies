@@ -40,7 +40,7 @@ const numberOfIntervals = Math.ceil((endYear - startYear) / interval);
 // Generar el array de boundaries
 const boundaries = Array.from(
   { length: numberOfIntervals },
-  (_, index) => startYear + interval * index
+  (_, index) => startYear + interval * index,
 );
 
 // Añadir el último valor al array de boundaries para incluir todos los documentos mayores al último boundary
@@ -48,7 +48,7 @@ boundaries.push(endYear + 1);
 
 const bucketBirthYears = {
   $bucket: {
-    groupBy: "$birthyear", // Field to group by
+    groupBy: "$birthYear", // Field to group by
     // boundaries: [ 1540, 1550, 1560, 1570, 1580, 1590, 1600, 1610 ], // Boundaries for the buckets
     boundaries: boundaries,
     default: "Other", // Bucket ID for documents which do not fall into a bucket

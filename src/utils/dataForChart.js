@@ -1,12 +1,4 @@
-/**
- * Generates data for a chart based on the input data.
- *
- * @param {Array} datos - The input data array
- * @return {Object} The chart data object
- */
-
-// TODO: hay que cambiar el nombre de esta función pq así no es buen nombre
-const createDataChart = (datos) => {
+const createdecadesBirthsChart = (datos) => {
   const etiquetas = datos.map((valor) => valor._id);
 
   // Converts avgTemp property to a number
@@ -128,7 +120,7 @@ const createCoordinates = (data) => {
 };
 
 module.exports = {
-  createDataChart,
+  createdecadesBirthsChart,
   createDataChartSources,
   createDataChartGenders,
   createDataChartHistBirths,
