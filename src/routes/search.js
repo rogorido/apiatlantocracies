@@ -5,13 +5,15 @@ const { birthYearsBucket } = require("../queries/persons/births");
 const { searchSchema } = require("../schemas/schemas");
 
 const {
-  createDataChart,
+  createdecadesBirthsChart,
   createDataChartSources,
   createDataChartGenders,
   createDataChartHistBirths,
   createDataChartHasTitles,
   createDataChartHasPositions,
 } = require("../utils/dataForChart");
+
+const { calculatePercentages } = require("../utils/percentages");
 
 const querygen = require("../queries/general");
 const querybirths = require("../queries/persons/births");
@@ -67,7 +69,7 @@ async function routes(fastify, options) {
       const hasPositionsChartData =
         createDataChartHasPositions(hasPositionsData);
 
-      const decadesBirthsChartData = createDataChart(decadesBirths);
+      const decadesBirthsChartData = createdecadesBirthsChart(decadesBirths);
       console.log(decadesBirthsChartData);
       //
       // we extract all positions to create a table of positions
@@ -82,21 +84,27 @@ async function routes(fastify, options) {
 
       // console.log(positionsTableTree);
 
+      // NOTE: there is for sure a better way to do this!
+      const insightsData = calculatePercentages({
+        gendersData,
+        sourcesData,
+        histBirthsData,
+        hasTitlesData,
+        hasPositionsData,
+      });
+
+      insightsData.sourcesChartData = sourcesChartData;
+      insightsData.gendersChartData = gendersChartData;
+      insightsData.histBirthsChartData = histBirthsChartData;
+      insightsData.hasTitlesChartData = hasTitlesChartData;
+      insightsData.hasPositionsChartData = hasPositionsChartData;
+      insightsData.positionsTable = positionsTable;
+      insightsData.positionsTableTree = positionsTableTree;
+      insightsData.decadesBirthsChartData = decadesBirthsChartData;
+
       reply.status(200).send({
         result,
-        sourcesData,
-        sourcesChartData,
-        gendersData,
-        gendersChartData,
-        histBirthsData,
-        histBirthsChartData,
-        hasTitlesChartData,
-        hasTitlesData,
-        hasPositionsChartData,
-        hasPositionsData,
-        positionsTable,
-        positionsTableTree,
-        decadesBirthsChartData,
+        insightsData,
       });
     } catch (error) {
       console.error(error);
