@@ -30,10 +30,7 @@ async function routes(fastify, options) {
   // fastify.post("/", searchSchema, async (request, reply) => {
   fastify.post("/", async (request, reply) => {
     try {
-      // console.log(request.body);
       const filter = macrofilterConverter(request.body);
-
-      // console.log(filter);
 
       const result = await vpersons.find(filter).toArray();
       const gendersData = await vpersons

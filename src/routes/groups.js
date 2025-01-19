@@ -15,12 +15,18 @@ async function routes(fastify, options) {
   const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
-  // TODO: aquí hay mucho dato muy similar que estoy pasando...
   fastify.post("/", async (request, reply) => {
     try {
       const filter = macrofilterConverter(request.body);
-      // console.log(filter);
 
+      // TODO: we are making this query 2x which is not a good idea
+      // 1. in the search page
+      // 2. in the groups page (that is, here)
+      //
+      // The problem: I have to do a loop with map for adding
+      // the details...
+      //
+      // What could be the best solution?
       const result = await vpersons.find(filter).toArray();
 
       // a forEach is not possible!
