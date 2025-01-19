@@ -56,9 +56,8 @@ async function routes(fastify, options) {
     const { place } = request.params;
 
     try {
-      const personsbirths = await persons.find({ placebirth: place }).toArray();
+      // const personsbirths = await persons.find({ placebirth: place }).toArray();
 
-      // pero esto es lo mismo,no?
       const personsall = await vpersons
         .aggregate(personsbyplace.pipeline(place))
         .toArray();
@@ -74,15 +73,16 @@ async function routes(fastify, options) {
         .aggregate(eventsbyplace.pipeline(place))
         .toArray();
       // TODO qué hace esto aquí?
-      const dataChart = createDataChartHistBirths(eventsplace);
+      // const dataChart = createDataChartHistBirths(eventsplace);
 
-      const eventsrelated = { eventsplace, dataChart };
+      // const eventsrelated = { eventsplace, dataChart };
 
       reply.status(200).send({
-        personsbirths,
+        // personsbirths,
         personsall,
         placesrelated,
-        eventsrelated,
+        // eventsrelated,
+        eventsplace,
       });
     } catch (error) {
       console.error(error);
