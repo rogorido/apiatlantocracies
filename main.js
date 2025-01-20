@@ -77,6 +77,7 @@ fastify.register(require("./src/routes/persons"), { prefix: "/persons" });
 fastify.register(require("./src/routes/groups"), { prefix: "/groups" });
 fastify.register(require("./src/routes/places"), { prefix: "/places" });
 fastify.register(require("./src/routes/relations"), { prefix: "/relations" });
+fastify.register(require("./src/routes/titles"), { prefix: "/titles" });
 fastify.register(require("./src/routes/events"), { prefix: "/events" });
 fastify.register(require("./src/routes/search"), { prefix: "/search" });
 fastify.register(require("./src/routes/management"), { prefix: "/management" });

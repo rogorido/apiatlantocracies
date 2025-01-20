@@ -59,6 +59,17 @@ const calculatePercentages = (data) => {
     });
   }
 
+  // in same cases data is the actual array!
+  if (Array.isArray(data)) {
+    const sumaTotal = data.reduce((total, obj) => total + obj.count, 0);
+
+    // Calcular el porcentaje para cada objeto en el array
+    data.forEach((obj) => {
+      let porcentaje = (obj.count / sumaTotal) * 100;
+      obj.percent = porcentaje.toFixed(2);
+    });
+  }
+
   return data;
 };
 
