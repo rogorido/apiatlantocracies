@@ -94,7 +94,9 @@ const aggpositions = (reltype) => {
     },
     {
       $group: {
-        _id: "$relations.position",
+        _id: {
+          $ifNull: ["$relations.position", "No data"],
+        },
         count: {
           $sum: 1,
         },
