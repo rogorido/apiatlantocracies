@@ -127,7 +127,7 @@ const createPersonsNetworkTable = async (data) => {
           namePersonRelated: relation.namePerson,
           placeRelation: relation.placeRel,
           positionRelation: relation.position,
-          histBirthRelated: relation.histBirth,
+          histBirthRelated: relation.histBirth || "No Data",
         };
 
         network.push(newnetworkitem);
