@@ -19,7 +19,7 @@ async function routes(fastify, options) {
       reply.status(200).send(result);
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error in the server or in the query");
+      reply.status(500).send("Error in the server or in the query");
     }
   });
 
@@ -36,7 +36,7 @@ async function routes(fastify, options) {
       reply.status(200).send({ result, dataChart });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error in the server or in the query");
+      reply.status(500).send("Error in the server or in the query");
     }
   });
 }

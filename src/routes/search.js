@@ -106,7 +106,7 @@ async function routes(fastify, options) {
       });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error in the server or in the query");
+      reply.status(500).send("Error in the server or in the query");
     }
   });
 }

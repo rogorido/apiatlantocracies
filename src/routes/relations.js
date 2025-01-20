@@ -6,7 +6,6 @@ const {
 } = require("../utils/relationsUtils");
 
 async function routes(fastify, options) {
-  // const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
   // NOTE: hacerlo así o con un post. Lo digo porque tienen espacios, símbolos, etc.
@@ -29,18 +28,16 @@ async function routes(fastify, options) {
       const infOriginsCountries = await aggOriginsCountries(relationid);
       const infOriginsHistBirths = await aggOriginsHistBirth(relationid);
 
-      reply
-        .status(200)
-        .send({
-          relationid,
-          positions,
-          infOriginsPlaces,
-          infOriginsCountries,
-          infOriginsHistBirths,
-        });
+      reply.status(200).send({
+        relationid,
+        positions,
+        infOriginsPlaces,
+        infOriginsCountries,
+        infOriginsHistBirths,
+      });
     } catch (error) {
       console.error(error);
-      reply.status(500).send("error in the server or in the query");
+      reply.status(500).send("Error in the server or in the query");
     }
   });
 }

@@ -32,8 +32,8 @@ function extraerAnio(fecha) {
 }
 
 // Calcular el número de intervalos
-const startYear = 1500;
-const endYear = 1800;
+const startYear = 1400;
+const endYear = 1900;
 const interval = 10;
 const numberOfIntervals = Math.ceil((endYear - startYear) / interval);
 
