@@ -19,14 +19,13 @@ function obtenerPipelinePorCiudad(ciudad) {
 // quiza se pueda meter otro campo con todos los lugares de evnetos, etc.
 // pero eso parece repetir mucho...
 const pipeline = (place) => {
-  const hostias = [
+  const filterCreated = [
     {
       $match: obtenerPipelinePorCiudad(place),
     },
     ...pl_places_global,
   ];
-  // console.log(JSON.stringify(hostias, null, 2));
-  return hostias;
+  return filterCreated;
 };
 
 module.exports = { pipeline };

@@ -3,7 +3,7 @@
 // 2. aggregate of positions.
 
 const aggrelation = (reltype) => {
-  const hostias = [
+  const filterCreated = [
     {
       $unwind: "$relations",
     },
@@ -78,12 +78,11 @@ const aggrelation = (reltype) => {
     },
   ];
 
-  // console.log(JSON.stringify(hostias, null, 2));
-  return hostias;
+  return filterCreated;
 };
 
 const aggpositions = (reltype) => {
-  const hostias = [
+  const filterCreated = [
     {
       $unwind: "$relations",
     },
@@ -109,8 +108,7 @@ const aggpositions = (reltype) => {
     },
   ];
 
-  // console.log(JSON.stringify(hostias, null, 2));
-  return hostias;
+  return filterCreated;
 };
 
 module.exports = { aggrelation, aggpositions };

@@ -8,15 +8,15 @@
 // pero eso parece repetir mucho...
 
 const pipeline = (place) => {
-  const hostias = [
+  const filterCreated = [
     {
       $match: { "events.placeEv": place },
     },
     { $unwind: "$events" },
     { $sortByCount: "$events.typeEv" },
   ];
-  // console.log(JSON.stringify(hostias, null, 2));
-  return hostias;
+
+  return filterCreated;
 };
 
 module.exports = { pipeline };

@@ -38,7 +38,7 @@ const aggOriginsPlaces = async (data) => {
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
     id: uuidv4(),
     data: {
-      place: infOrigin,
+      place: infOrigin === "undefined" ? "No data" : infOrigin,
       count: null,
       percentage: null,
     },
@@ -85,7 +85,7 @@ const aggOriginsCountries = async (data) => {
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
     id: uuidv4(),
     data: {
-      place: infOrigin === "undefined" ? "No data" : infOrigin,
+      place: infOrigin === "undefined" ? "No Data" : infOrigin,
       count: null,
       percentage: null,
     },
@@ -134,7 +134,7 @@ const aggOriginsHistBirth = async (data) => {
   const formattedResult = Object.entries(result).map(([infOrigin, counts]) => ({
     id: uuidv4(),
     data: {
-      place: infOrigin === "undefined" ? "No data" : infOrigin,
+      place: infOrigin === "undefined" ? "No Data" : infOrigin,
       count: null,
       percentage: null,
     },
