@@ -102,6 +102,7 @@ async function routes(fastify, options) {
       reply.status(200).send({
         result,
         insightsData,
+        filter,
       });
     } catch (error) {
       console.error(error);

@@ -34,20 +34,20 @@ async function routes(fastify, options) {
         return personDetails(person);
       });
 
-      const personsrelations = await vpersons
+      const personsRelations = await vpersons
         .aggregate([{ $match: filter }, ...cytorelationsfilter])
         .toArray();
-      const personsrelationsDetails = personsrelations.map((person) => {
+      const personsRelationsDetails = personsRelations.map((person) => {
         return personDetails(person);
       });
-      const personsrelationscyto = await createPersonsNetworkCyto(
-        personsrelationsDetails,
+      const personsRelationsCyto = await createPersonsNetworkCyto(
+        personsRelationsDetails,
         fastify.mongo.atlanto.db,
       );
 
       // transform the data into a table format for use in the frontend.
-      const personsrelationstable = await createPersonsNetworkTable(
-        personsrelationsDetails,
+      const personsRelationsTable = await createPersonsNetworkTable(
+        personsRelationsDetails,
       );
       // console.log(personsrelationstable);
 
@@ -61,18 +61,19 @@ async function routes(fastify, options) {
 
       const ids = extractIds(personsDetails);
       // TODO: do we need to check if ids is []? Theoretically this is not possible...
-      const placesrelatedraw = await persons
+      const placesRelatedRaw = await persons
         .aggregate([{ $match: { _id: { $in: ids } } }, ...pl_places_global])
         .toArray();
-      const placesrelated = flipCoords(placesrelatedraw);
+      const placesRelated = flipCoords(placesRelatedRaw);
       // console.log(placesrelated);
 
       reply.status(200).send({
         personsDetails,
-        personsrelations,
-        personsrelationstable,
-        personsrelationscyto,
-        placesrelated,
+        personsRelations,
+        personsRelationsTable,
+        personsRelationsCyto,
+        placesRelated,
+        filter,
       });
     } catch (error) {
       console.error(error);
