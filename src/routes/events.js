@@ -1,17 +1,14 @@
+const qevents = require("../queries/events/events");
 const eventsbyplace = require("../queries/events/byplace");
 
 const { createDataChartHistBirths } = require("../utils/dataForChart");
+const { calculatePercentages } = require("../utils/percentages");
+// const { placeSchema } = require("../schemas/schemas");
 
-const { placeSchema } = require("../schemas/schemas");
-
-/**
- * Encapsulates the routes
- * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
- */
 async function routes(fastify, options) {
+  // TODO: es necesario los dos?
   const persons = fastify.mongo.atlanto.db.collection("persons");
-  const vpersons = fastify.mongo.atlanto.db.collection("vistapersonas");
+  const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
   fastify.get("/", async (request, reply) => {
     try {
@@ -34,6 +31,35 @@ async function routes(fastify, options) {
       // TODO qué hace esto aquí?
       const dataChart = createDataChartHistBirths(result);
       reply.status(200).send({ result, dataChart });
+    } catch (error) {
+      console.error(error);
+      reply.status(500).send("Error in the server or in the query");
+    }
+  });
+
+  fastify.get("/:eventtype", async (request, reply) => {
+    const { eventtype } = request.params;
+
+    try {
+      const personsAll = await vpersons
+        .find(qevents.personsAll(eventtype))
+        .toArray();
+
+      const placesAllRaw = await vpersons
+        .aggregate(qevents.placesAll(eventtype))
+        .toArray();
+
+      const eventDecades = await vpersons
+        .aggregate(qevents.eventDecades(eventtype))
+        .toArray();
+
+      const placesAll = calculatePercentages(placesAllRaw);
+
+      reply.status(200).send({
+        personsAll,
+        placesAll,
+        eventDecades,
+      });
     } catch (error) {
       console.error(error);
       reply.status(500).send("Error in the server or in the query");

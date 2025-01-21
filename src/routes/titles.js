@@ -4,7 +4,6 @@ const { calculatePercentages } = require("../utils/percentages");
 async function routes(fastify, options) {
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
 
-  // NOTE: hacerlo así o con un post. Lo digo porque tienen espacios, símbolos, etc.
   fastify.get("/:titletype", async (request, reply) => {
     const { titletype } = request.params;
 
