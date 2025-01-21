@@ -71,4 +71,22 @@ const macrofilterConverter = (filter) => {
   return filter;
 };
 
-module.exports = { macrofilterConverter };
+const macroTableFields = {
+  _id: 1,
+  name: 1,
+  birthYear: 1,
+  deathYear: 1,
+  placebirth: 1,
+  placeDeath: 1,
+  gender: 1,
+  hasFather: 1,
+  wasMarried: 1,
+  hasMother: 1,
+  hizoTestamento: 1,
+  numberOfEvents: 1,
+  numberOfRelations: 1,
+  numberOfPositions: 1,
+  numberOfTitles: 1,
+};
+
+module.exports = { macrofilterConverter, macroTableFields };

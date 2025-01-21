@@ -1,4 +1,7 @@
-const { macrofilterConverter } = require("../queries/macrofilter/filter");
+const {
+  macrofilterConverter,
+  macroTableFields,
+} = require("../queries/macrofilter/filter");
 
 const { birthYearsBucket } = require("../queries/persons/births");
 
@@ -18,11 +21,6 @@ const { calculatePercentages } = require("../utils/percentages");
 const querygen = require("../queries/general");
 const querybirths = require("../queries/persons/births");
 
-/**
- * Encapsulates the routes
- * @param {FastifyInstance} fastify  Encapsulated Fastify Instance
- * @param {Object} options plugin options, refer to https://fastify.dev/docs/latest/Reference/Plugins/#plugin-options
- */
 async function routes(fastify, options) {
   // const persons = fastify.mongo.atlanto.db.collection("persons");
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
@@ -32,7 +30,10 @@ async function routes(fastify, options) {
     try {
       const filter = macrofilterConverter(request.body);
 
-      const result = await vpersons.find(filter).toArray();
+      const result = await vpersons
+        .find(filter)
+        .project(macroTableFields)
+        .toArray();
       const gendersData = await vpersons
         .aggregate([{ $match: filter }, ...querygen.genders])
         .toArray();

@@ -1,6 +1,9 @@
 const { personDetails } = require("../utils/personDetalis");
 
-const { macrofilterConverter } = require("../queries/macrofilter/filter");
+const {
+  macrofilterConverter,
+  macroTableFields,
+} = require("../queries/macrofilter/filter");
 const { cytorelationsfilter } = require("../queries/groups/relations");
 const { pl_places_global } = require("../queries/places/places");
 const { flipCoords } = require("../utils/coordsFlipped");
@@ -27,13 +30,13 @@ async function routes(fastify, options) {
       // the details...
       //
       // What could be the best solution?
-      const result = await vpersons.find(filter).toArray();
 
-      // a forEach is not possible!
-      const personsDetails = result.map((person) => {
-        return personDetails(person);
-      });
+      const result = await vpersons
+        .find(filter)
+        .project(macroTableFields)
+        .toArray();
 
+      // we calculate the cytoscape graph
       const personsRelations = await vpersons
         .aggregate([{ $match: filter }, ...cytorelationsfilter])
         .toArray();
@@ -49,7 +52,6 @@ async function routes(fastify, options) {
       const personsRelationsTable = await createPersonsNetworkTable(
         personsRelationsDetails,
       );
-      // console.log(personsrelationstable);
 
       // NOTE: this is not a good solution. The problem is that we need the collection persons since
       // there are all relations, etc. And not in the view personascontodo. But we can not use
@@ -59,7 +61,7 @@ async function routes(fastify, options) {
       // 2. extract the ids of all persons in these group and filter accordingly.
       //
 
-      const ids = extractIds(personsDetails);
+      const ids = extractIds(result);
       // TODO: do we need to check if ids is []? Theoretically this is not possible...
       const placesRelatedRaw = await persons
         .aggregate([{ $match: { _id: { $in: ids } } }, ...pl_places_global])
@@ -68,8 +70,7 @@ async function routes(fastify, options) {
       // console.log(placesrelated);
 
       reply.status(200).send({
-        personsDetails,
-        personsRelations,
+        personsDetails: result,
         personsRelationsTable,
         personsRelationsCyto,
         placesRelated,

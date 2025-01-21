@@ -1,5 +1,6 @@
 const qtitles = require("../queries/titles/titles");
 const { calculatePercentages } = require("../utils/percentages");
+const { macroTableFields } = require("../queries/macrofilter/filter");
 
 async function routes(fastify, options) {
   const vpersons = fastify.mongo.atlanto.db.collection("vistapersonascontodo");
@@ -10,6 +11,7 @@ async function routes(fastify, options) {
     try {
       const personsAll = await vpersons
         .find(qtitles.personsAll(titletype))
+        .project(macroTableFields)
         .toArray();
 
       const continentsAllRaw = await vpersons
