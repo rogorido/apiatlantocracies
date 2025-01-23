@@ -13,14 +13,16 @@ const personsAll = (eventtype) => {
 };
 
 const placesAll = (eventtype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all places
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$events" },
+    },
     {
       $match: {
         "events.typeEv": eventtype,
       },
-    },
-    {
-      $unwind: { path: "$events" },
     },
     {
       $sortByCount: "$events.placeEv",

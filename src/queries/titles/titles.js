@@ -2,7 +2,6 @@
 // 1. aggregate for concrete relation:
 // 2. aggregate of positions.
 
-const { titlescontinents } = require("../general");
 const { titleYearsBucket } = require("./yearstitles");
 
 const personsAll = (titletype) => {
@@ -14,27 +13,39 @@ const personsAll = (titletype) => {
 };
 
 const continentsAll = (titletype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all places
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$titles" },
+    },
     {
       $match: {
         "titles.nomTit": titletype,
       },
     },
-    ...titlescontinents,
+    {
+      $sortByCount: "$titles.continental",
+    },
+    {
+      $match: { _id: { $ne: null } },
+    },
   ];
 
   return filterCreated;
 };
 
 const countriesAll = (titletype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all places
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$titles" },
+    },
     {
       $match: {
         "titles.nomTit": titletype,
       },
-    },
-    {
-      $unwind: { path: "$titles" },
     },
     {
       $sortByCount: "$titles.countryTit",
@@ -48,14 +59,16 @@ const countriesAll = (titletype) => {
 };
 
 const benefactorsAll = (titletype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all places
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$titles" },
+    },
     {
       $match: {
         "titles.nomTit": titletype,
       },
-    },
-    {
-      $unwind: { path: "$titles" },
     },
     {
       $sortByCount: "$titles.benefactor",
@@ -71,12 +84,12 @@ const benefactorsAll = (titletype) => {
 const titleDecades = (titletype) => {
   const filterCreated = [
     {
+      $unwind: { path: "$titles" },
+    },
+    {
       $match: {
         "titles.nomTit": titletype,
       },
-    },
-    {
-      $unwind: { path: "$titles" },
     },
     ...titleYearsBucket,
   ];

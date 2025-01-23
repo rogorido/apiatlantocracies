@@ -7,14 +7,16 @@ const personsAll = (positiontype) => {
 };
 
 const countriesAll = (positiontype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all countries
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$positions" },
+    },
     {
       $match: {
         "positions.namePos": positiontype,
       },
-    },
-    {
-      $unwind: { path: "$positions" },
     },
     {
       $sortByCount: "$positions.countryPos",
@@ -28,14 +30,16 @@ const countriesAll = (positiontype) => {
 };
 
 const placesAll = (positiontype) => {
+  // NOTE: important. we have to do the unwind first, otherwise I get all places
+  // of the person, even if they do not have anything to do with the position.
   const filterCreated = [
+    {
+      $unwind: { path: "$positions" },
+    },
     {
       $match: {
         "positions.namePos": positiontype,
       },
-    },
-    {
-      $unwind: { path: "$positions" },
     },
     {
       $sortByCount: "$positions.placePos",
