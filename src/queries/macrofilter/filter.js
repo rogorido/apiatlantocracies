@@ -66,7 +66,7 @@ const macrofilterConverter = (filter) => {
   if (filter.deathYear) {
     filter.deathYear = { $gte: filter.deathYear[0], $lt: filter.deathYear[1] };
   }
-  console.log(JSON.stringify(filter, null, 2));
+  // console.log(JSON.stringify(filter, null, 2));
 
   return filter;
 };

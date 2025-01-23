@@ -68,7 +68,7 @@ async function routes(fastify, options) {
         createDataChartHasPositions(hasPositionsData);
 
       const decadesBirthsChartData = createdecadesBirthsChart(decadesBirths);
-      console.log(decadesBirthsChartData);
+      // console.log(decadesBirthsChartData);
       //
       // we extract all positions to create a table of positions
       const positionsTable = await vpersons
