@@ -59,7 +59,7 @@ fastify.register(require("@fastify/cors"), {
     "https://atlanto.digitalhumanities.digital",
     "https://atlantocracies.digitalhumanities.digital",
   ],
-  methods: ["GET", "POST", "OPTIONS"],
+  methods: "GET,POST,OPTIONS",
 });
 
 fastify.register(require("@fastify/rate-limit"), {
